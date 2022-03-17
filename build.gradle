@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'com.github.johnrengelman.shadow' version '5.0.0'
+	id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 
@@ -19,7 +19,7 @@ import java.nio.file.Files
 Path projectDirectoryPath = projectDir.toPath().toAbsolutePath()
 
 
-sourceCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_17
 
 sourceSets {
 	main {
@@ -50,8 +50,8 @@ repositories {
 }
 
 dependencies {
-	compileOnly group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.16.2-R0.1-SNAPSHOT'
-	compile group: 'com.github.HurricaneGamesOrg', name: 'HurricaneGamesCommandLib', version: '56a7ccd258'
+	compileOnly group: 'io.papermc.paper', name: 'paper-api', version: '1.17.1-R0.1-SNAPSHOT'
+	implementation group: 'com.github.HurricaneGamesOrg', name: 'HurricaneGamesCommandLib', version: '56a7ccd258'
 }
 
 compileJava {
