@@ -1,0 +1,7 @@
+name: CreativeItemFilter
+main: org.hurricanegames.creativeitemfilter.CreativeItemFilter
+api-version: 1.19
+version: '@project.version@'
+author: _Shevchik_
+commands:
+  creativeitemfilter: {}

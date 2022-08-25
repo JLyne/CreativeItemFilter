@@ -19,17 +19,6 @@ version '3.0-SNAPSHOT'
 java.sourceCompatibility = JavaVersion.VERSION_17
 java.targetCompatibility = JavaVersion.VERSION_17
 
-sourceSets {
-	main {
-		java {
-			srcDirs = ['src']
-		}
-		resources {
-			srcDirs = ['resources']
-		}
-	}
-}
-
 repositories {
 	mavenCentral()
 	maven {
@@ -64,6 +53,7 @@ tasks {
 
     processResources {
         from("${project.rootDir}/src/main/resources") {
+            duplicatesStrategy = DuplicatesStrategy.INCLUDE
             project.properties.findAll().each {
                 prop ->
                     if (prop.value != null && prop.value instanceof java.lang.String) {

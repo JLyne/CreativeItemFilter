@@ -47,8 +47,7 @@ public class CreativeItemFilterHandler implements Listener {
 
 				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta));
 
-				if (oldMeta instanceof Damageable) {
-					Damageable oldMetaDamageable = (Damageable) oldMeta;
+				if (oldMeta instanceof Damageable oldMetaDamageable) {
 					if (oldMetaDamageable.hasDamage()) {
 						((Damageable) newMeta).setDamage(oldMetaDamageable.getDamage());
 					}
