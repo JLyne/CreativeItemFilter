@@ -26,4 +26,4 @@ logs/
 # IntelliJ
 .idea/
 *.iml
-
+build.gradle.local

@@ -1,25 +1,23 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
-	id 'java'
+    id 'java'
+	id 'maven-publish'
 	id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
+rootProject.ext.mavenUserName=""
+rootProject.ext.mavenPassword=""
 
-defaultTasks 'build'
-
+if (file("./build.gradle.local").exists()) {
+    apply from: "./build.gradle.local"
+}
 
 group 'org.hurricanegames'
-version '2.0'
+version '3.0-SNAPSHOT'
 
-
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.nio.file.Files
-
-
-Path projectDirectoryPath = projectDir.toPath().toAbsolutePath()
-
-
-sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
 sourceSets {
 	main {
@@ -34,7 +32,6 @@ sourceSets {
 
 repositories {
 	mavenCentral()
-	jcenter()
 	maven {
 		url 'https://oss.sonatype.org/content/repositories/snapshots/'
 	}
@@ -50,40 +47,74 @@ repositories {
 }
 
 dependencies {
-	compileOnly group: 'io.papermc.paper', name: 'paper-api', version: '1.17.1-R0.1-SNAPSHOT'
+	compileOnly group: 'io.papermc.paper', name: 'paper-api', version: '1.19.2-R0.1-SNAPSHOT'
 	implementation group: 'com.github.HurricaneGamesOrg', name: 'HurricaneGamesCommandLib', version: '56a7ccd258'
 }
 
-compileJava {
-	options.encoding = 'UTF-8'
-	options.incremental = false
+tasks {
+    shadowJar {
+        String relocatePrefix = group + "." + rootProject.name.toLowerCase() + ".zlibs."
+        archiveClassifier.set('')
+	    relocate 'org.hurricanegames.commandlib', relocatePrefix + 'commandlib'
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+
+    processResources {
+        from("${project.rootDir}/src/main/resources") {
+            project.properties.findAll().each {
+                prop ->
+                    if (prop.value != null && prop.value instanceof java.lang.String) {
+                        filter(ReplaceTokens, tokens: [(prop.key): prop.value])
+                        filter(ReplaceTokens, tokens: [('project.' + prop.key): prop.value])
+                    }
+            }
+        }
+    }
+
+    compileJava {
+        options.compilerArgs += ["-Xlint:all", "-Xlint:-processing"]
+        options.encoding = 'UTF-8'
+    }
 }
 
 
-String relocatePrefix = group + "." + rootProject.name.toLowerCase() + ".zlibs."
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                description = 'CreativeItemFilter'
+                url = 'https://github.com/JLyne/CreativeItemFilter'
+                developers {
+                    developer {
+                        id = 'jim'
+                        name = 'James Lyne'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/JLyne/CreativeItemFilter.git'
+                    developerConnection = 'scm:git:ssh://github.com/JLyne/CreativeItemFilter.git'
+                    url = 'https://github.com/JLyne/CreativeItemFilter'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = rootProject.ext.mavenUserName
+                password = rootProject.ext.mavenPassword
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
 
-shadowJar {
-	from sourceSets.main.java.srcDirs
-	from 'LICENSE'
-
-	archiveName = jar.archiveName
-
-	relocate 'org.hurricanegames.commandlib', relocatePrefix + 'commandlib'
+            def releasesRepoUrl = "https://repo.not-null.co.uk/releases/" // gradle -Prelease publish
+            def snapshotsRepoUrl = "https://repo.not-null.co.uk/snapshots/"
+            url = project.hasProperty('release') ? releasesRepoUrl : snapshotsRepoUrl
+        }
+    }
 }
-
-
-task copyFinalJarToTarget(type: DefaultTask) {doLast{
-	Path targetJarDirectory = projectDirectoryPath.resolve("target")
-	Files.createDirectories(targetJarDirectory)
-	java.nio.file.Files.copy(
-		shadowJar.archivePath.toPath().toAbsolutePath(),
-		targetJarDirectory.resolve(shadowJar.baseName + '.jar'),
-		java.nio.file.StandardCopyOption.REPLACE_EXISTING
-	)
-}}
-
-
-compileJava.dependsOn(clean)
-jar.enabled = false
-jar.finalizedBy(shadowJar)
-shadowJar.finalizedBy(copyFinalJarToTarget)
