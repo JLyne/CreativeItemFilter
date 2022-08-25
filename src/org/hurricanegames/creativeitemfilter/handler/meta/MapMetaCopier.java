@@ -26,4 +26,8 @@ public class MapMetaCopier implements MetaCopier<MapMeta> {
 			newMeta.setColor(oldMeta.getColor());
 		}
 	}
+
+	public Class<MapMeta> getMetaClass() {
+		return MapMeta.class;
+	}
 }

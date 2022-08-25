@@ -18,4 +18,7 @@ public class KnowledgeBookMetaCopier implements MetaCopier<KnowledgeBookMeta> {
 		}
 	}
 
+	public Class<KnowledgeBookMeta> getMetaClass() {
+		return KnowledgeBookMeta.class;
+	}
 }

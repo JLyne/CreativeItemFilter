@@ -25,4 +25,7 @@ public class PotionMetaCopier implements MetaCopier<PotionMeta> {
 		}
 	}
 
+	public Class<PotionMeta> getMetaClass() {
+		return PotionMeta.class;
+	}
 }

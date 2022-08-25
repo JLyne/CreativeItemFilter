@@ -21,4 +21,7 @@ public class EnchantmentStorageMetaCopier implements MetaCopier<EnchantmentStora
 		}
 	}
 
+	public Class<EnchantmentStorageMeta> getMetaClass() {
+		return EnchantmentStorageMeta.class;
+	}
 }

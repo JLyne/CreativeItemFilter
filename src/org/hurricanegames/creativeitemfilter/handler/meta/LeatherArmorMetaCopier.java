@@ -15,4 +15,7 @@ public class LeatherArmorMetaCopier implements MetaCopier<LeatherArmorMeta> {
 		newMeta.setColor(oldMeta.getColor());
 	}
 
+	public Class<LeatherArmorMeta> getMetaClass() {
+		return LeatherArmorMeta.class;
+	}
 }

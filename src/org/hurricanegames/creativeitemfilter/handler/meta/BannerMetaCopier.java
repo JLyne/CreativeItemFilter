@@ -15,4 +15,7 @@ public class BannerMetaCopier implements MetaCopier<BannerMeta> {
 		oldMeta.getPatterns().forEach(newMeta::addPattern);
 	}
 
+	public Class<BannerMeta> getMetaClass() {
+		return BannerMeta.class;
+	}
 }

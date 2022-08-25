@@ -18,4 +18,7 @@ public class CompassMetaCopier implements MetaCopier<CompassMeta> {
 		}
 	}
 
+	public Class<CompassMeta> getMetaClass() {
+		return CompassMeta.class;
+	}
 }

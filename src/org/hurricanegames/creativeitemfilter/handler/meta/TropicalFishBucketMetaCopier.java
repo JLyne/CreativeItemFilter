@@ -19,4 +19,7 @@ public class TropicalFishBucketMetaCopier implements MetaCopier<TropicalFishBuck
 		}
 	}
 
+	public Class<TropicalFishBucketMeta> getMetaClass() {
+		return TropicalFishBucketMeta.class;
+	}
 }

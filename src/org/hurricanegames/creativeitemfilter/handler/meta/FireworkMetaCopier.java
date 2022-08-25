@@ -28,4 +28,7 @@ public class FireworkMetaCopier implements MetaCopier<FireworkMeta> {
 		}
 	}
 
+	public Class<FireworkMeta> getMetaClass() {
+		return FireworkMeta.class;
+	}
 }

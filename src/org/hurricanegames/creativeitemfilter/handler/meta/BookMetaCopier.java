@@ -35,4 +35,7 @@ public class BookMetaCopier implements MetaCopier<BookMeta> {
 		}
 	}
 
+	public Class<BookMeta> getMetaClass() {
+		return BookMeta.class;
+	}
 }

@@ -14,4 +14,7 @@ public class NoOpMetaCopier implements MetaCopier<ItemMeta> {
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, ItemMeta oldMeta, ItemMeta newMeta) {
 	}
 
+	public Class<ItemMeta> getMetaClass() {
+		return ItemMeta.class;
+	}
 }

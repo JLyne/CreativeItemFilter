@@ -31,4 +31,7 @@ public class FireworkEffectMetaCopier implements MetaCopier<FireworkEffectMeta> 
 			.build();
 	}
 
+	public Class<FireworkEffectMeta> getMetaClass() {
+		return FireworkEffectMeta.class;
+	}
 }
