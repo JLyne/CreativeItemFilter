@@ -24,13 +24,13 @@ public class CreativeItemFilterHandler implements Listener {
 
 	private final Logger logger;
 	private final CreativeItemFilterConfiguration configuration;
+	private final MetaCopierFactory metaCopierFactory;
 
-	public CreativeItemFilterHandler(Logger logger, CreativeItemFilterConfiguration configuration) {
+	public CreativeItemFilterHandler(Logger logger, MetaCopierFactory factory, CreativeItemFilterConfiguration configuration) {
 		this.logger = logger;
 		this.configuration = configuration;
+		this.metaCopierFactory = factory;
 	}
-
-	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory();
 
 	//TODO: Specific material ItemMeta may extend multiple ItemMeta interfaces, so the code needs to be adapted to be able to handle that
 	@EventHandler
