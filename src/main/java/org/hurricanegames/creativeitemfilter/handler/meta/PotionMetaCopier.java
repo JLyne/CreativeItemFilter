@@ -13,7 +13,7 @@ public class PotionMetaCopier implements MetaCopier<PotionMeta> {
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, PotionMeta oldMeta, PotionMeta newMeta) {
 		newMeta.setColor(oldMeta.getColor());
-		newMeta.setBasePotionData(oldMeta.getBasePotionData());
+		newMeta.setBasePotionType(oldMeta.getBasePotionType());
 		if (oldMeta.hasCustomEffects()) {
 			int maxAmplifier = configuration.getPotionEffectsMaxAmplifier();
 			long maxDuration = configuration.getPotionEffectsMaxAmplifier();

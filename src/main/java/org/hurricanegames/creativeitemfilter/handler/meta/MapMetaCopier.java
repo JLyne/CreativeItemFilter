@@ -18,8 +18,8 @@ public class MapMetaCopier implements MetaCopier<MapMeta> {
 
 		newMeta.setScaling(oldMeta.isScaling());
 
-		if(oldMeta.hasLocationName()) {
-			newMeta.setLocationName(oldMeta.getLocationName());
+		if(oldMeta.hasDisplayName()) {
+			newMeta.displayName(oldMeta.displayName());
 		}
 
 		if(oldMeta.hasColor()) {
