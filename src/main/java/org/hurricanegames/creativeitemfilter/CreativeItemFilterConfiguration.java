@@ -1,155 +1,87 @@
 package org.hurricanegames.creativeitemfilter;
 
-import java.io.File;
-import java.util.concurrent.TimeUnit;
+import org.bukkit.plugin.Plugin;
 
-import org.hurricanegames.commandlib.configurations.ConfigurationUtils.IntegerConfigurationField;
-import org.hurricanegames.commandlib.configurations.ConfigurationUtils.LongConfigurationField;
-import org.hurricanegames.commandlib.configurations.SimpleConfiguration;
+public class CreativeItemFilterConfiguration {
+	private final Plugin plugin;
 
-public class CreativeItemFilterConfiguration extends SimpleConfiguration {
-
-	private final File storageFile;
-
-	public CreativeItemFilterConfiguration(File storageFile) {
-		this.storageFile = storageFile;
+	public CreativeItemFilterConfiguration(Plugin plugin) {
+		this.plugin = plugin;
 	}
-
-	@Override
-	protected File getStorageFile() {
-		return storageFile;
-	}
-
-	@ConfigurationFieldDefinition(fieldName = "enchantment.max_level", fieldType = IntegerConfigurationField.class)
-	private Integer enchantmentMaxLevel = Integer.valueOf(15);
-	@ConfigurationFieldDefinition(fieldName = "enchantment.max_level", fieldType = IntegerConfigurationField.class)
-	private Integer enchantmentMaxCount = Integer.valueOf(6);
-	@ConfigurationFieldDefinition(fieldName = "enchantment.remove_unapplicable")
-	private Boolean enchantmentRemoveUnapplicable = Boolean.FALSE;
-
-	@ConfigurationFieldDefinition(fieldName = "display_name.max_length", fieldType = IntegerConfigurationField.class)
-	private Integer displayNameMaxLength = Integer.valueOf(64);
-
-	@ConfigurationFieldDefinition(fieldName = "lore.max_length", fieldType = IntegerConfigurationField.class)
-	private Integer loreMaxLength = Integer.valueOf(64);
-	@ConfigurationFieldDefinition(fieldName = "lore.max_count", fieldType = IntegerConfigurationField.class)
-	private Integer loreMaxCount = Integer.valueOf(32);
-
-	@ConfigurationFieldDefinition(fieldName = "enchantment_book.max_level", fieldType = IntegerConfigurationField.class)
-	private Integer enchantmentBookMaxLevel = Integer.valueOf(15);
-	@ConfigurationFieldDefinition(fieldName = "enchantment_book.max_count", fieldType = IntegerConfigurationField.class)
-	private Integer enchantmentBookMaxCount = Integer.valueOf(6);
-
-	@ConfigurationFieldDefinition(fieldName = "book.author.max_length", fieldType = IntegerConfigurationField.class)
-	private Integer bookAuthorMaxLength = Integer.valueOf(16);
-	@ConfigurationFieldDefinition(fieldName = "book.title.max_length", fieldType = IntegerConfigurationField.class)
-	private Integer bookTitleMaxLength = Integer.valueOf(64);
-	@ConfigurationFieldDefinition(fieldName = "book.pages.max_length", fieldType = IntegerConfigurationField.class)
-	private Integer bookPagesMaxLength = Integer.valueOf(255);
-	@ConfigurationFieldDefinition(fieldName = "book.pages.max_count", fieldType = IntegerConfigurationField.class)
-	private Integer bookPagesMaxCount = Integer.valueOf(20);
-
-	@ConfigurationFieldDefinition(fieldName = "potion.effects.max_amplifier", fieldType = IntegerConfigurationField.class)
-	private Integer potionEffectMaxAmplifier = Integer.valueOf(5);
-	@ConfigurationFieldDefinition(fieldName = "potion.effects.max_duration", fieldType = LongConfigurationField.class)
-	private Long potionEffectMaxDuration = Long.valueOf(TimeUnit.MINUTES.toSeconds(10) * 20);
-	@ConfigurationFieldDefinition(fieldName = "potion.effects.max_count", fieldType = IntegerConfigurationField.class)
-	private Integer potionEffectMaxCount = Integer.valueOf(4);
-
-	@ConfigurationFieldDefinition(fieldName = "firework_effect.colors.max_count", fieldType = IntegerConfigurationField.class)
-	private Integer fireworkEffectColorsMaxCount = Integer.valueOf(16);
-
-	@ConfigurationFieldDefinition(fieldName = "firework.max_power", fieldType = IntegerConfigurationField.class)
-	private Integer fireworkMaxPower = Integer.valueOf(64);
-	@ConfigurationFieldDefinition(fieldName = "firework.max_effects", fieldType = IntegerConfigurationField.class)
-	private Integer fireworkMaxEffects = Integer.valueOf(8);
-
-	@ConfigurationFieldDefinition(fieldName = "knowledge_book.max_recipes", fieldType = IntegerConfigurationField.class)
-	private Integer knowledgeBookMaxRecipes = Integer.valueOf(10);
-
 
 	public int getEnchantmentMaxLevel() {
-		return enchantmentMaxLevel;
+		return plugin.getConfig().getInt("enchantment.max_level");
 	}
 
 	public int getEnchantmentMaxCount() {
-		return enchantmentMaxCount;
+		return plugin.getConfig().getInt("enchantment.max_count");
 	}
 
 	public boolean getEnchantmentRemoveUnapplicableEnabled() {
-		return enchantmentRemoveUnapplicable;
+		return plugin.getConfig().getBoolean("enchantment.remove_unapplicable");
 	}
-
 
 	public int getDisplayNameMaxLength() {
-		return displayNameMaxLength;
+		return plugin.getConfig().getInt("display_name.max_length");
 	}
 
-
 	public int getLoreMaxLength() {
-		return loreMaxLength;
+		return plugin.getConfig().getInt("lore.max_length");
 	}
 
 	public int getLoreMaxCount() {
-		return loreMaxCount;
+		return plugin.getConfig().getInt("lore.max_count");
 	}
 
-
 	public int getEnchantmentBookMaxLevel() {
-		return enchantmentBookMaxLevel;
+		return plugin.getConfig().getInt("enchantment_book.max_level");
 	}
 
 	public int getEnchantmentBookMaxCount() {
-		return enchantmentBookMaxCount;
+		return plugin.getConfig().getInt("enchantment_book.max_count");
 	}
 
-
 	public int getBookAuthorMaxLength() {
-		return bookAuthorMaxLength;
+		return plugin.getConfig().getInt("book.author.max_length");
 	}
 
 	public int getBookTitleMaxLength() {
-		return bookTitleMaxLength;
+		return plugin.getConfig().getInt("book.title.max_length");
 	}
 
 	public int getBookPagesMaxLength() {
-		return bookPagesMaxLength;
+		return plugin.getConfig().getInt("book.pages.max_length");
 	}
 
 	public int getBookPagesMaxCount() {
-		return bookPagesMaxCount;
+		return plugin.getConfig().getInt("book.pages.max_count");
 	}
 
-
 	public int getPotionEffectsMaxAmplifier() {
-		return potionEffectMaxAmplifier;
+		return plugin.getConfig().getInt("potion.effects.max_amplifier");
 	}
 
 	public long getPotionEffectsMaxDuration() {
-		return potionEffectMaxDuration;
+		return plugin.getConfig().getInt("potion.effects.max_duration");
 	}
 
 	public int getPotionEffectsMaxCount() {
-		return potionEffectMaxCount;
+		return plugin.getConfig().getInt("potion.effects.max_count");
 	}
-
 
 	public int getFireworkEffectColorsMaxCount() {
-		return fireworkEffectColorsMaxCount;
+		return plugin.getConfig().getInt("firework_effect.colors.max_count");
 	}
 
-
 	public int getFireworkMaxPower() {
-		return fireworkMaxPower;
+		return plugin.getConfig().getInt("firework.max_power");
 	}
 
 	public int getFireworkMaxEffects() {
-		return fireworkMaxEffects;
+		return plugin.getConfig().getInt("firework.max_effects");
 	}
-
 
 	public int getKnowledgeBookMaxRecipes() {
-		return knowledgeBookMaxRecipes;
+		return plugin.getConfig().getInt("knowledge_book.max_recipes");
 	}
-
 }

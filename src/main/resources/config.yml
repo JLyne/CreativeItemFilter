@@ -1,0 +1,33 @@
+enchantment:
+  max_level: 15
+  max_count: 6
+  remove_unapplicable: false
+display_name:
+  max_length: 64
+lore:
+  max_length: 64
+  max_count: 32
+enchantment_book:
+  max_level: 15
+  max_count: 6
+book:
+  author:
+    max_length: 16
+  title:
+    max_length: 64
+  pages:
+    max_length: 255
+    max_count: 20
+potion:
+  effects:
+    max_amplifier: 5
+    max_duration: 12000
+    max_count: 4
+firework_effect:
+  colors:
+    max_count: 16
+firework:
+  max_power: 64
+  max_effects: 8
+knowledge_book:
+  max_recipes: 10

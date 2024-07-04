@@ -37,14 +37,12 @@ repositories {
 
 dependencies {
 	compileOnly group: 'io.papermc.paper', name: 'paper-api', version: '1.20.6-R0.1-SNAPSHOT'
-	implementation group: 'com.github.HurricaneGamesOrg', name: 'HurricaneGamesCommandLib', version: '56a7ccd258'
 }
 
 tasks {
     shadowJar {
         String relocatePrefix = group + "." + rootProject.name.toLowerCase() + ".zlibs."
         archiveClassifier.set('')
-	    relocate 'org.hurricanegames.commandlib', relocatePrefix + 'commandlib'
     }
 
     build {
