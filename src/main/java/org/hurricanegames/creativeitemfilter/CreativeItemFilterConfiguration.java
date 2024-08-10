@@ -88,4 +88,8 @@ public class CreativeItemFilterConfiguration {
 	public int getDamageMax() {
 		return plugin.getConfig().getInt("damage.max");
 	}
+
+	public int getStackSizeMax() {
+		return plugin.getConfig().getInt("stack_size.max");
+	}
 }

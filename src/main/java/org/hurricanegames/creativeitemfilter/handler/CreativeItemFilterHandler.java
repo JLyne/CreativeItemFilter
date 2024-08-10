@@ -70,8 +70,14 @@ public class CreativeItemFilterHandler implements Listener {
 					((Repairable) newMeta).setRepairCost(((Repairable) oldMeta).getRepairCost());
 				}
 
+				// custom_model_data component
 				if (oldMeta.hasCustomModelData()) {
 					newMeta.setCustomModelData(oldMeta.getCustomModelData());
+				}
+
+				// max_stack_size component
+				if(oldMeta.hasMaxStackSize()) {
+					newMeta.setMaxStackSize(Math.min(oldMeta.getMaxStackSize(), configuration.getStackSizeMax()));
 				}
 
 				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
