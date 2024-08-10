@@ -12,17 +12,13 @@ public class MapMetaCopier implements MetaCopier<MapMeta> {
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, MapMeta oldMeta, MapMeta newMeta) {
-		if(oldMeta.hasMapView()) {
+		if(oldMeta.hasMapView()) { // map_id (and map_decorations?) component
 			newMeta.setMapView(oldMeta.getMapView());
 		}
 
 		newMeta.setScaling(oldMeta.isScaling());
 
-		if(oldMeta.hasDisplayName()) {
-			newMeta.displayName(oldMeta.displayName());
-		}
-
-		if(oldMeta.hasColor()) {
+		if(oldMeta.hasColor()) { // map_color
 			newMeta.setColor(oldMeta.getColor());
 		}
 	}
