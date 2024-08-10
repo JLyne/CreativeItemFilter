@@ -83,6 +83,11 @@ public class CreativeItemFilterHandler implements Listener {
 				// hide_tooltip component
 				newMeta.setHideTooltip(oldMeta.isHideTooltip());
 
+				// rarity component
+				if(oldMeta.hasRarity()) {
+					newMeta.setRarity(oldMeta.getRarity());
+				}
+
 				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
 
 				if (oldMeta.hasDisplayName()) {
