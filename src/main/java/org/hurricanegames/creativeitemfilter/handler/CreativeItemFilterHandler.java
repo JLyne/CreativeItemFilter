@@ -66,6 +66,7 @@ public class CreativeItemFilterHandler implements Listener {
 					newMeta.setEnchantmentGlintOverride(oldMeta.getEnchantmentGlintOverride());
 				}
 
+				// repair_cost component
 				if (oldMeta instanceof Repairable) {
 					((Repairable) newMeta).setRepairCost(((Repairable) oldMeta).getRepairCost());
 				}
@@ -90,12 +91,21 @@ public class CreativeItemFilterHandler implements Listener {
 
 				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
 
+				// custom_name component
 				if (oldMeta.hasDisplayName()
 						&& CreativeItemFilter.plain.serialize(oldMeta.displayName()).length()
 						<= configuration.getDisplayNameMaxLength()) {
 					newMeta.displayName(oldMeta.displayName());
 				}
 
+				// item_name component
+				if (oldMeta.hasItemName()
+						&& CreativeItemFilter.plain.serialize(oldMeta.itemName()).length()
+						<= configuration.getDisplayNameMaxLength()) {
+					newMeta.itemName(oldMeta.itemName());
+				}
+
+				// lore component
 				int loreMaxLength = configuration.getLoreMaxLength();
 				if (oldMeta.hasLore()) {
 					newMeta.lore(
