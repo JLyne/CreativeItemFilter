@@ -42,13 +42,21 @@ public class CreativeItemFilterHandler implements Listener {
 
 			if (oldItem.hasItemMeta()) {
 				ItemMeta oldMeta = oldItem.getItemMeta();
-
 				ItemMeta newMeta = Bukkit.getItemFactory().getItemMeta(newItem.getType());
 
 				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta));
 
 				if (oldMeta instanceof Damageable oldMetaDamageable) {
-					if (oldMetaDamageable.hasDamage()) {
+					if(oldMetaDamageable.hasMaxDamage()) {
+						// max_damage component
+						((Damageable) newMeta).setMaxDamage(Math.min(oldMetaDamageable.getMaxDamage(), configuration.getDamageMax()));
+
+						// damage component
+						if(oldMetaDamageable.hasDamage()) {
+							((Damageable) newMeta).setDamage(Math.min(oldMetaDamageable.getDamage(), ((Damageable) newMeta).getMaxDamage()));
+						}
+					} else if(oldMetaDamageable.hasDamage()) {
+						// damage component
 						((Damageable) newMeta).setDamage(oldMetaDamageable.getDamage());
 					}
 				}

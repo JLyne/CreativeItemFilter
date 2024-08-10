@@ -31,3 +31,5 @@ firework:
   max_effects: 8
 knowledge_book:
   max_recipes: 10
+damage:
+  max: 2048

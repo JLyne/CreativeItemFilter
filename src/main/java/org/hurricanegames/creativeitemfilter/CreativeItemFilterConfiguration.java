@@ -84,4 +84,8 @@ public class CreativeItemFilterConfiguration {
 	public int getKnowledgeBookMaxRecipes() {
 		return plugin.getConfig().getInt("knowledge_book.max_recipes");
 	}
+
+	public int getDamageMax() {
+		return plugin.getConfig().getInt("damage.max");
+	}
 }
