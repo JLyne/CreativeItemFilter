@@ -23,6 +23,7 @@ public class MetaCopierFactory {
 		addCopier(PotionMetaCopier.INSTANCE);
 		addCopier(FireworkEffectMetaCopier.INSTANCE);
 		addCopier(FireworkMetaCopier.INSTANCE);
+		addCopier(InstrumentMetaCopier.INSTANCE);
 		addCopier(NoOpMetaCopier.INSTANCE);
 	}
 
