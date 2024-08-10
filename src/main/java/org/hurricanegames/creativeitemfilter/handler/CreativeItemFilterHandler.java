@@ -80,6 +80,9 @@ public class CreativeItemFilterHandler implements Listener {
 					newMeta.setMaxStackSize(Math.min(oldMeta.getMaxStackSize(), configuration.getStackSizeMax()));
 				}
 
+				// hide_tooltip component
+				newMeta.setHideTooltip(oldMeta.isHideTooltip());
+
 				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
 
 				if (oldMeta.hasDisplayName()) {
