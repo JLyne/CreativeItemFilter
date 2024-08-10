@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.MusicInstrumentMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class InstrumentMetaCopier implements MetaCopier<MusicInstrumentMeta> {
-
 	public static final InstrumentMetaCopier INSTANCE = new InstrumentMetaCopier();
-
-	protected InstrumentMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, MusicInstrumentMeta oldMeta, MusicInstrumentMeta newMeta) {

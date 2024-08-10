@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class EnchantmentStorageMetaCopier implements MetaCopier<EnchantmentStorageMeta> {
-
 	public static final EnchantmentStorageMetaCopier INSTANCE = new EnchantmentStorageMetaCopier();
-
-	protected EnchantmentStorageMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, EnchantmentStorageMeta oldMeta, EnchantmentStorageMeta newMeta) {

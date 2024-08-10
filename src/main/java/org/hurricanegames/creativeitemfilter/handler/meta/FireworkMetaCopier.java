@@ -1,16 +1,12 @@
 package org.hurricanegames.creativeitemfilter.handler.meta;
 
-import java.util.stream.Collectors;
-
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
+import java.util.stream.Collectors;
+
 public class FireworkMetaCopier implements MetaCopier<FireworkMeta> {
-
 	public static final FireworkMetaCopier INSTANCE = new FireworkMetaCopier();
-
-	protected FireworkMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, FireworkMeta oldMeta, FireworkMeta newMeta) {

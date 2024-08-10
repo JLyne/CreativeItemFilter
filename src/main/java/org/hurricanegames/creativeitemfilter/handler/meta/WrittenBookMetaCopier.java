@@ -1,17 +1,13 @@
 package org.hurricanegames.creativeitemfilter.handler.meta;
 
-import java.util.stream.Collectors;
-
 import org.bukkit.inventory.meta.BookMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
+import java.util.stream.Collectors;
+
 public class WrittenBookMetaCopier implements MetaCopier<BookMeta> {
-
 	public static final WrittenBookMetaCopier INSTANCE = new WrittenBookMetaCopier();
-
-	protected WrittenBookMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, BookMeta oldMeta, BookMeta newMeta) {
@@ -31,7 +27,7 @@ public class WrittenBookMetaCopier implements MetaCopier<BookMeta> {
 
 		if (oldMeta.hasPages()) {
 			int bookPagesMaxLength = configuration.getBookPagesMaxLength();
-			newMeta.pages(
+			newMeta = (BookMeta) newMeta.pages(
 				oldMeta.pages().stream()
 				.filter(page -> CreativeItemFilter.plain.serialize(page).length() <= bookPagesMaxLength)
 				.limit(configuration.getBookPagesMaxCount())

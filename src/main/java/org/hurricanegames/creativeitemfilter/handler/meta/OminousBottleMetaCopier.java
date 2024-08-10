@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.OminousBottleMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class OminousBottleMetaCopier implements MetaCopier<OminousBottleMeta> {
-
 	public static final OminousBottleMetaCopier INSTANCE = new OminousBottleMetaCopier();
-
-	protected OminousBottleMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, OminousBottleMeta oldMeta, OminousBottleMeta newMeta) {

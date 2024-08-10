@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class TropicalFishBucketMetaCopier implements MetaCopier<TropicalFishBucketMeta> {
-
 	public static final TropicalFishBucketMetaCopier INSTANCE = new TropicalFishBucketMetaCopier();
-
-	protected TropicalFishBucketMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, TropicalFishBucketMeta oldMeta, TropicalFishBucketMeta newMeta) {

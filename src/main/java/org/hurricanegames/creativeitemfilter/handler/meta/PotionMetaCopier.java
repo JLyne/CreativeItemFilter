@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class PotionMetaCopier implements MetaCopier<PotionMeta> {
-
 	public static final PotionMetaCopier INSTANCE = new PotionMetaCopier();
-
-	protected PotionMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, PotionMeta oldMeta, PotionMeta newMeta) {

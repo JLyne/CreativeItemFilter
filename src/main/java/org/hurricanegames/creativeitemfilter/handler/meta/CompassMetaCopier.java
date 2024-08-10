@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.CompassMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class CompassMetaCopier implements MetaCopier<CompassMeta> {
-
 	public static final CompassMetaCopier INSTANCE = new CompassMetaCopier();
-
-	protected CompassMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, CompassMeta oldMeta, CompassMeta newMeta) {

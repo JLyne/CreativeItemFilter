@@ -4,11 +4,7 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public class MapMetaCopier implements MetaCopier<MapMeta> {
-
 	public static final MapMetaCopier INSTANCE = new MapMetaCopier();
-
-	protected MapMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, MapMeta oldMeta, MapMeta newMeta) {

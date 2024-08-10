@@ -6,11 +6,7 @@ import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.utils.CollectionUtils;
 
 public class FireworkEffectMetaCopier implements MetaCopier<FireworkEffectMeta> {
-
 	public static final FireworkEffectMetaCopier INSTANCE = new FireworkEffectMetaCopier();
-
-	protected FireworkEffectMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, FireworkEffectMeta oldMeta, FireworkEffectMeta newMeta) {

@@ -5,7 +5,7 @@ import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
 public interface MetaCopier<T extends ItemMeta> {
 
-	public void copyValidMeta(CreativeItemFilterConfiguration configuration, T oldMeta, T newMeta);
+	void copyValidMeta(CreativeItemFilterConfiguration configuration, T oldMeta, T newMeta);
 
-	public Class<T> getMetaClass();
+	Class<T> getMetaClass();
 }

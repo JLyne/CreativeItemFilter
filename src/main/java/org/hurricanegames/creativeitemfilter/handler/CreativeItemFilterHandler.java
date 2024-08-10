@@ -19,7 +19,6 @@ import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
 
 public class CreativeItemFilterHandler implements Listener {
-
 	private static final ItemFlag[] ITEM_FLAGS_EMPTY = new ItemFlag[0];
 
 	private final Logger logger;
@@ -137,5 +136,4 @@ public class CreativeItemFilterHandler implements Listener {
 			logger.log(Level.WARNING, "Unable to create safe clone of creative itemstack, removing", t);
 		}
 	}
-
 }

@@ -7,11 +7,7 @@ import org.hurricanegames.creativeitemfilter.utils.StringUtils;
 import java.util.stream.Collectors;
 
 public class WritableBookMetaCopier implements MetaCopier<WritableBookMeta> {
-
 	public static final WritableBookMetaCopier INSTANCE = new WritableBookMetaCopier();
-
-	protected WritableBookMetaCopier() {
-	}
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, WritableBookMeta oldMeta, WritableBookMeta newMeta) {
