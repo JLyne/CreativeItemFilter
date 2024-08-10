@@ -84,6 +84,9 @@ public class CreativeItemFilterHandler implements Listener {
 				// hide_tooltip component
 				newMeta.setHideTooltip(oldMeta.isHideTooltip());
 
+				// fire_resistant component
+				newMeta.setFireResistant(oldMeta.isFireResistant());
+
 				// rarity component
 				if(oldMeta.hasRarity()) {
 					newMeta.setRarity(oldMeta.getRarity());
@@ -119,6 +122,7 @@ public class CreativeItemFilterHandler implements Listener {
 				newItem.setItemMeta(newMeta);
 			}
 
+			// enchantments component
 			int enchantmentMaxLevel = configuration.getEnchantmentMaxLevel();
 			oldItem.getEnchantments().entrySet().stream()
 			.filter(entry -> (entry.getValue() > 0) && (entry.getValue() <= enchantmentMaxLevel))
