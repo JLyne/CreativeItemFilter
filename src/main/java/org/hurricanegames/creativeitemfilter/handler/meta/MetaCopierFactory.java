@@ -25,6 +25,7 @@ public class MetaCopierFactory {
 		addCopier(FireworkEffectMetaCopier.INSTANCE);
 		addCopier(FireworkMetaCopier.INSTANCE);
 		addCopier(InstrumentMetaCopier.INSTANCE);
+		addCopier(OminousBottleMetaCopier.INSTANCE); // ominous_bottle_amplifier
 		addCopier(NoOpMetaCopier.INSTANCE);
 	}
 
