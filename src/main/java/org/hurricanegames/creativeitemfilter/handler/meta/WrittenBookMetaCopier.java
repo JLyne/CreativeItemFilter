@@ -6,11 +6,11 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
-public class BookMetaCopier implements MetaCopier<BookMeta> {
+public class WrittenBookMetaCopier implements MetaCopier<BookMeta> {
 
-	public static final BookMetaCopier INSTANCE = new BookMetaCopier();
+	public static final WrittenBookMetaCopier INSTANCE = new WrittenBookMetaCopier();
 
-	protected BookMetaCopier() {
+	protected WrittenBookMetaCopier() {
 	}
 
 	@Override

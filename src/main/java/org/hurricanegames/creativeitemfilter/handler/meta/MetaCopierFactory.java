@@ -18,7 +18,8 @@ public class MetaCopierFactory {
 		addCopier(BannerMetaCopier.INSTANCE);
 		addCopier(MapMetaCopier.INSTANCE);
 		addCopier(EnchantmentStorageMetaCopier.INSTANCE);
-		addCopier(BookMetaCopier.INSTANCE);
+		addCopier(WrittenBookMetaCopier.INSTANCE); // written_book_contents
+		addCopier(WritableBookMetaCopier.INSTANCE); // writable_book_contents
 		addCopier(KnowledgeBookMetaCopier.INSTANCE);
 		addCopier(PotionMetaCopier.INSTANCE);
 		addCopier(FireworkEffectMetaCopier.INSTANCE);
