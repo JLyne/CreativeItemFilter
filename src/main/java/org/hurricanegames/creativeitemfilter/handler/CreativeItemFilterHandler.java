@@ -61,6 +61,11 @@ public class CreativeItemFilterHandler implements Listener {
 					}
 				}
 
+				// enchantment_glint_override component
+				if (oldMeta.hasEnchantmentGlintOverride()) {
+					newMeta.setEnchantmentGlintOverride(oldMeta.getEnchantmentGlintOverride());
+				}
+
 				if (oldMeta instanceof Repairable) {
 					((Repairable) newMeta).setRepairCost(((Repairable) oldMeta).getRepairCost());
 				}
