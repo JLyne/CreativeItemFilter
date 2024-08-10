@@ -2,6 +2,6 @@ name: CreativeItemFilter
 main: org.hurricanegames.creativeitemfilter.CreativeItemFilter
 api-version: '1.21'
 version: '@project.version@'
-author: _Shevchik_
-commands:
-  creativeitemfilter: {}
+authors:
+  - Jim (AnEnragedPigeon)
+  - _Shevchik_
