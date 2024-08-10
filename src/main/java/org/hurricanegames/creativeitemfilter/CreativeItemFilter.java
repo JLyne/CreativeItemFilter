@@ -2,6 +2,7 @@ package org.hurricanegames.creativeitemfilter;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory();
+	public static final PlainTextComponentSerializer plain = PlainTextComponentSerializer.plainText();
 
 	@Override
 	public void onEnable() {

@@ -14,9 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
+import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
-import org.hurricanegames.creativeitemfilter.utils.StringUtils;
 
 public class CreativeItemFilterHandler implements Listener {
 
@@ -90,15 +90,17 @@ public class CreativeItemFilterHandler implements Listener {
 
 				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
 
-				if (oldMeta.hasDisplayName()) {
-					newMeta.setDisplayName(StringUtils.clampString(oldMeta.getDisplayName(), configuration.getDisplayNameMaxLength()));
+				if (oldMeta.hasDisplayName()
+						&& CreativeItemFilter.plain.serialize(oldMeta.displayName()).length()
+						<= configuration.getDisplayNameMaxLength()) {
+					newMeta.displayName(oldMeta.displayName());
 				}
 
 				int loreMaxLength = configuration.getLoreMaxLength();
 				if (oldMeta.hasLore()) {
-					newMeta.setLore(
-						oldMeta.getLore().stream()
-						.map(loreLine -> StringUtils.clampString(loreLine, loreMaxLength))
+					newMeta.lore(
+						oldMeta.lore().stream()
+						.filter(loreLine -> CreativeItemFilter.plain.serialize(loreLine).length() <= loreMaxLength)
 						.limit(configuration.getLoreMaxCount())
 						.collect(Collectors.toList())
 					);
