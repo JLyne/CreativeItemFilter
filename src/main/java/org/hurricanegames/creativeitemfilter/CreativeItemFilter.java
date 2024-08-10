@@ -1,17 +1,23 @@
 package org.hurricanegames.creativeitemfilter;
 
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.tree.LiteralCommandNode;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.hurricanegames.creativeitemfilter.handler.CreativeItemFilterHandler;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
-import org.jetbrains.annotations.NotNull;
 
+import static io.papermc.paper.command.brigadier.Commands.literal;
 
+@SuppressWarnings("UnstableApiUsage")
 public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory();
@@ -24,18 +30,23 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		saveDefaultConfig();
 		getServer().getPluginManager().registerEvents(new CreativeItemFilterHandler(getLogger(), metaCopierFactory,
 																					configuration), this);
+
+		LifecycleEventManager<Plugin> manager = getLifecycleManager();
+		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> registerCommands(event.registrar()));
 	}
 
-	@Override
-	public boolean onCommand(
-			@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-		if(command.equals(getCommand("creativeitemfilter")) && args.length == 1 && args[0].equals("reload")) {
-			reloadConfig();
-			sender.sendMessage(Component.text("Reloaded config.").color(NamedTextColor.GREEN));
-			return true;
-		}
+	public void registerCommands(Commands commands) {
+		LiteralCommandNode<CommandSourceStack> reloadCommand = literal("reload")
+				.requires(source -> source.getSender().hasPermission("creativeitemfilter.reload"))
+				.executes(ctx -> {
+					reloadConfig();
+					ctx.getSource().getSender()
+							.sendMessage(Component.text("Reloaded config.").color(NamedTextColor.GREEN));
+					return Command.SINGLE_SUCCESS;
+				}).build();
 
-		return super.onCommand(sender, command, label, args);
+		commands.register(literal("creativeitemfilter")
+								  .then(reloadCommand).build(), "Main command for CreativeItemFilter");
 	}
 
 	public MetaCopierFactory getMetaCopierFactory() {
