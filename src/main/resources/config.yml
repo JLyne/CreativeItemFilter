@@ -14,7 +14,7 @@ book:
   author:
     max_length: 16
   title:
-    max_length: 64
+    max_length: 32
   pages:
     max_length: 255
     max_count: 20
