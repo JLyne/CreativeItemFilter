@@ -37,7 +37,6 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	public void registerCommands(Commands commands) {
 		LiteralCommandNode<CommandSourceStack> reloadCommand = literal("reload")
-				.requires(source -> source.getSender().hasPermission("creativeitemfilter.reload"))
 				.executes(ctx -> {
 					reloadConfig();
 					ctx.getSource().getSender()
@@ -46,6 +45,8 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 				}).build();
 
 		commands.register(literal("creativeitemfilter")
+								  .requires(source -> source.getSender()
+										  .hasPermission("creativeitemfilter.reload"))
 								  .then(reloadCommand).build(), "Main command for CreativeItemFilter");
 	}
 
