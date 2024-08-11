@@ -1,6 +1,6 @@
 name: CreativeItemFilter
 main: org.hurricanegames.creativeitemfilter.CreativeItemFilter
-api-version: '1.21'
+api-version: '1.21.1'
 version: '@project.version@'
 authors:
   - Jim (AnEnragedPigeon)
