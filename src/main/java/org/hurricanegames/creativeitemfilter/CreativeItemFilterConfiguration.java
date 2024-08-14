@@ -1,111 +1,169 @@
 package org.hurricanegames.creativeitemfilter;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
-public class CreativeItemFilterConfiguration {
+public final class CreativeItemFilterConfiguration {
 	private final Plugin plugin;
+	private int enchantmentMaxLevel;
+	private int enchantmentMaxCount;
+	private boolean enchantmentRemoveUnapplicable;
+	private int displayNameMaxLength;
+	private int loreMaxLength;
+	private int loreMaxCount;
+	private int enchantedBookMaxLevel;
+	private int enchantedBookMaxCount;
+	private int bookAuthorMaxLength;
+	private int bookTitleMaxLength;
+	private int bookPagesMaxLength;
+	private int bookPagesMaxCount;
+	private int potionMaxAmplifier;
+	private int potionMaxDuration;
+	private int potionMaxCount;
+	private int fireworkMaxColors;
+	private int fireworkMaxPower;
+	private int fireworkMaxEffects;
+	private int knowledgeBookMaxRecipes;
+	private int componentsMaxChildDepth;
+	private int componentsMaxArgumentDepth;
+	private int componentsMaxArgumentCount;
+	private int componentsMaxChildCount;
+	private int damageMax;
+	private int stackSizeMax;
 
 	public CreativeItemFilterConfiguration(Plugin plugin) {
 		this.plugin = plugin;
+
+		reloadValues();
+	}
+
+	public void reloadValues() {
+		ConfigurationSection config = plugin.getConfig();
+
+		enchantmentMaxLevel = config.getInt("enchantment.max_level", 15);
+		enchantmentMaxCount = config.getInt("enchantment.max_count", 6);
+		enchantmentRemoveUnapplicable = config.getBoolean("enchantment.remove_unapplicable");
+		displayNameMaxLength = config.getInt("display_name.max_length", 64);
+		loreMaxCount = config.getInt("lore.max_count", 32);
+		loreMaxLength = config.getInt("lore.max_length", 64);
+		enchantedBookMaxLevel = config.getInt("enchantment_book.max_level", 15);
+		enchantedBookMaxCount = config.getInt("enchantment_book.max_count", 6);
+		bookAuthorMaxLength = config.getInt("book.author.max_length", 16);
+		bookTitleMaxLength = config.getInt("book.title.max_length", 32);
+		bookPagesMaxLength = config.getInt("book.pages.max_length", 255);
+		bookPagesMaxCount = config.getInt("book.pages.max_count", 20);
+		potionMaxAmplifier = config.getInt("potion.effects.max_amplifier", 5);
+		potionMaxDuration = config.getInt("potion.effects.max_duration", 12000);
+		potionMaxCount = config.getInt("potion.effects.max_count", 4);
+		fireworkMaxColors = config.getInt("firework_effect.colors.max_count", 16);
+		fireworkMaxPower = config.getInt("firework.max_power", 64);
+		fireworkMaxEffects = config.getInt("firework.max_effects", 8);
+		knowledgeBookMaxRecipes = config.getInt("knowledge_book.max_recipes", 10);
+		componentsMaxChildDepth = config.getInt("component.max_child_depth", 10);
+		componentsMaxArgumentDepth = config.getInt("component.max_translation_depth", 3);
+		componentsMaxArgumentCount = config.getInt("component.max_translation_arguments", 10);
+		componentsMaxChildCount = config.getInt("component.max_child_count", 100);
+		damageMax = config.getInt("damage.max", 2048);
+		stackSizeMax = config.getInt("stack_size.max", 64);
 	}
 
 	public int getEnchantmentMaxLevel() {
-		return plugin.getConfig().getInt("enchantment.max_level");
+		return enchantmentMaxLevel;
 	}
 
 	public int getEnchantmentMaxCount() {
-		return plugin.getConfig().getInt("enchantment.max_count");
+		return enchantmentMaxCount;
 	}
 
 	public boolean getEnchantmentRemoveUnapplicableEnabled() {
-		return plugin.getConfig().getBoolean("enchantment.remove_unapplicable");
+		return enchantmentRemoveUnapplicable;
 	}
 
 	public int getDisplayNameMaxLength() {
-		return plugin.getConfig().getInt("display_name.max_length");
+		return displayNameMaxLength;
 	}
 
 	public int getLoreMaxLength() {
-		return plugin.getConfig().getInt("lore.max_length");
+		return loreMaxLength;
 	}
 
 	public int getLoreMaxCount() {
-		return plugin.getConfig().getInt("lore.max_count");
+		return loreMaxCount;
 	}
 
 	public int getEnchantmentBookMaxLevel() {
-		return plugin.getConfig().getInt("enchantment_book.max_level");
+		return enchantedBookMaxLevel;
 	}
 
 	public int getEnchantmentBookMaxCount() {
-		return plugin.getConfig().getInt("enchantment_book.max_count");
+		return enchantedBookMaxCount;
 	}
 
 	public int getBookAuthorMaxLength() {
-		return plugin.getConfig().getInt("book.author.max_length");
+		return bookAuthorMaxLength;
 	}
 
 	public int getBookTitleMaxLength() {
-		return plugin.getConfig().getInt("book.title.max_length");
+		return bookTitleMaxLength;
 	}
 
 	public int getBookPagesMaxLength() {
-		return plugin.getConfig().getInt("book.pages.max_length");
+		return bookPagesMaxLength;
 	}
 
 	public int getBookPagesMaxCount() {
-		return plugin.getConfig().getInt("book.pages.max_count");
+		return bookPagesMaxCount;
 	}
 
 	public int getPotionEffectsMaxAmplifier() {
-		return plugin.getConfig().getInt("potion.effects.max_amplifier");
+		return potionMaxAmplifier;
 	}
 
 	public long getPotionEffectsMaxDuration() {
-		return plugin.getConfig().getInt("potion.effects.max_duration");
+		return potionMaxDuration;
 	}
 
 	public int getPotionEffectsMaxCount() {
-		return plugin.getConfig().getInt("potion.effects.max_count");
+		return potionMaxCount;
 	}
 
 	public int getFireworkEffectColorsMaxCount() {
-		return plugin.getConfig().getInt("firework_effect.colors.max_count");
+		return fireworkMaxColors;
 	}
 
 	public int getFireworkMaxPower() {
-		return plugin.getConfig().getInt("firework.max_power");
+		return fireworkMaxPower;
 	}
 
 	public int getFireworkMaxEffects() {
-		return plugin.getConfig().getInt("firework.max_effects");
+		return fireworkMaxEffects;
 	}
 
 	public int getKnowledgeBookMaxRecipes() {
-		return plugin.getConfig().getInt("knowledge_book.max_recipes");
+		return knowledgeBookMaxRecipes;
 	}
 
 	public int getComponentMaxChildDepth() {
-		return plugin.getConfig().getInt("components.max_child_depth");
+		return componentsMaxChildDepth;
 	}
 
 	public int getComponentMaxTranslationDepth() {
-		return plugin.getConfig().getInt("components.max_translation_depth");
+		return componentsMaxArgumentDepth;
 	}
 
 	public int getComponentMaxTranslationArguments() {
-		return plugin.getConfig().getInt("components.max_translation_arguments");
+		return componentsMaxArgumentCount;
 	}
 
 	public int getComponentMaxChildCount() {
-		return plugin.getConfig().getInt("components.max_child_count");
+		return componentsMaxChildCount;
 	}
 
 	public int getDamageMax() {
-		return plugin.getConfig().getInt("damage.max");
+		return damageMax;
 	}
 
 	public int getStackSizeMax() {
-		return plugin.getConfig().getInt("stack_size.max");
+		return stackSizeMax;
 	}
 }

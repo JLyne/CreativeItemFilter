@@ -12,7 +12,7 @@ public class PotionMetaCopier implements MetaCopier<PotionMeta> {
 		newMeta.setBasePotionType(oldMeta.getBasePotionType());
 		if (oldMeta.hasCustomEffects()) {
 			int maxAmplifier = configuration.getPotionEffectsMaxAmplifier();
-			long maxDuration = configuration.getPotionEffectsMaxAmplifier();
+			long maxDuration = configuration.getPotionEffectsMaxDuration();
 			oldMeta.getCustomEffects().stream()
 			.filter(effect -> effect.getAmplifier() < maxAmplifier)
 			.filter(effect -> effect.getDuration() < maxDuration)

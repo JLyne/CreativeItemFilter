@@ -29,7 +29,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		instance = this;
 		configuration = new CreativeItemFilterConfiguration(this);
 
-		saveDefaultConfig();
+		loadConfig();
 		getServer().getPluginManager().registerEvents(new CreativeItemFilterHandler(getLogger(), metaCopierFactory,
 																					configuration), this);
 
@@ -37,10 +37,16 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> registerCommands(event.registrar()));
 	}
 
+	private void loadConfig() {
+		saveDefaultConfig();
+		reloadConfig();
+		configuration.reloadValues();
+	}
+
 	private void registerCommands(Commands commands) {
 		LiteralCommandNode<CommandSourceStack> reloadCommand = literal("reload")
 				.executes(ctx -> {
-					reloadConfig();
+					loadConfig();
 					ctx.getSource().getSender()
 							.sendMessage(Component.text("Reloaded config.").color(NamedTextColor.GREEN));
 					return Command.SINGLE_SUCCESS;
