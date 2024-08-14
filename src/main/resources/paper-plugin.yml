@@ -5,3 +5,8 @@ version: '@project.version@'
 authors:
   - Jim (AnEnragedPigeon)
   - _Shevchik_
+
+permissions:
+  creativeitemfilter.reload:
+    default: op
+    description: Allows reloading the configuration
