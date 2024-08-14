@@ -8,7 +8,6 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,12 +19,15 @@ import static io.papermc.paper.command.brigadier.Commands.literal;
 @SuppressWarnings("UnstableApiUsage")
 public class CreativeItemFilter extends JavaPlugin implements Listener {
 
+	private static CreativeItemFilter instance ;
 	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory();
-	public static final PlainTextComponentSerializer plain = PlainTextComponentSerializer.plainText();
+
+	public static CreativeItemFilterConfiguration configuration;
 
 	@Override
 	public void onEnable() {
-		CreativeItemFilterConfiguration configuration = new CreativeItemFilterConfiguration(this);
+		instance = this;
+		configuration = new CreativeItemFilterConfiguration(this);
 
 		saveDefaultConfig();
 		getServer().getPluginManager().registerEvents(new CreativeItemFilterHandler(getLogger(), metaCopierFactory,
@@ -35,7 +37,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> registerCommands(event.registrar()));
 	}
 
-	public void registerCommands(Commands commands) {
+	private void registerCommands(Commands commands) {
 		LiteralCommandNode<CommandSourceStack> reloadCommand = literal("reload")
 				.executes(ctx -> {
 					reloadConfig();
@@ -52,5 +54,9 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	public MetaCopierFactory getMetaCopierFactory() {
 		return metaCopierFactory;
+	}
+
+	public static CreativeItemFilter getInstance() {
+		return instance;
 	}
 }

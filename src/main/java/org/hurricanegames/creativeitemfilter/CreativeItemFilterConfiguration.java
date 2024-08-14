@@ -85,6 +85,22 @@ public class CreativeItemFilterConfiguration {
 		return plugin.getConfig().getInt("knowledge_book.max_recipes");
 	}
 
+	public int getComponentMaxChildDepth() {
+		return plugin.getConfig().getInt("components.max_child_depth");
+	}
+
+	public int getComponentMaxTranslationDepth() {
+		return plugin.getConfig().getInt("components.max_translation_depth");
+	}
+
+	public int getComponentMaxTranslationArguments() {
+		return plugin.getConfig().getInt("components.max_translation_arguments");
+	}
+
+	public int getComponentMaxChildCount() {
+		return plugin.getConfig().getInt("components.max_child_count");
+	}
+
 	public int getDamageMax() {
 		return plugin.getConfig().getInt("damage.max");
 	}

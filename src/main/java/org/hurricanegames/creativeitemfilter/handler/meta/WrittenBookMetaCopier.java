@@ -1,23 +1,24 @@
 package org.hurricanegames.creativeitemfilter.handler.meta;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.meta.BookMeta;
-import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
-
-import java.util.stream.Collectors;
+import org.hurricanegames.creativeitemfilter.utils.ComponentUtils;
 
 public class WrittenBookMetaCopier implements MetaCopier<BookMeta> {
 	public static final WrittenBookMetaCopier INSTANCE = new WrittenBookMetaCopier();
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, BookMeta oldMeta, BookMeta newMeta) {
-		if (oldMeta.hasAuthor()
-				&& CreativeItemFilter.plain.serialize(oldMeta.author()).length() <= configuration.getBookAuthorMaxLength()) {
+		int authorMaxLength = configuration.getBookAuthorMaxLength();
+		int titleMaxLength = configuration.getBookTitleMaxLength();
+		int pageMaxLength = configuration.getBookPagesMaxLength();
+
+		if (oldMeta.hasAuthor() && ComponentUtils.validateComponent(oldMeta.author(), authorMaxLength)) {
 			newMeta.author(oldMeta.author());
 		}
 
-		if (oldMeta.hasTitle()
-				&& CreativeItemFilter.plain.serialize(oldMeta.title()).length() <= configuration.getBookTitleMaxLength()) {
+		if (oldMeta.hasTitle() && ComponentUtils.validateComponent(oldMeta.title(), titleMaxLength)) {
 			newMeta.title(oldMeta.title());
 		}
 
@@ -26,13 +27,9 @@ public class WrittenBookMetaCopier implements MetaCopier<BookMeta> {
 		}
 
 		if (oldMeta.hasPages()) {
-			int bookPagesMaxLength = configuration.getBookPagesMaxLength();
-			newMeta = (BookMeta) newMeta.pages(
-				oldMeta.pages().stream()
-				.filter(page -> CreativeItemFilter.plain.serialize(page).length() <= bookPagesMaxLength)
-				.limit(configuration.getBookPagesMaxCount())
-				.collect(Collectors.toList())
-			);
+			newMeta.addPages(oldMeta.pages().stream()
+									 .filter(page -> ComponentUtils.validateComponent(page, pageMaxLength))
+									 .limit(configuration.getBookPagesMaxCount()).toArray(Component[]::new));
 		}
 	}
 

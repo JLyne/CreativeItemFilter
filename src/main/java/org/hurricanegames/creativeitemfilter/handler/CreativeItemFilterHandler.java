@@ -14,9 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
-import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
+import org.hurricanegames.creativeitemfilter.utils.ComponentUtils;
 
 public class CreativeItemFilterHandler implements Listener {
 	private static final ItemFlag[] ITEM_FLAGS_EMPTY = new ItemFlag[0];
@@ -93,32 +93,32 @@ public class CreativeItemFilterHandler implements Listener {
 
 				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
 
+				int nameMaxLength = configuration.getDisplayNameMaxLength();
+
 				// custom_name component
-				if (oldMeta.hasDisplayName()
-						&& CreativeItemFilter.plain.serialize(oldMeta.displayName()).length()
-						<= configuration.getDisplayNameMaxLength()) {
+				if (oldMeta.hasDisplayName() && ComponentUtils.validateComponent(oldMeta.displayName(), nameMaxLength)) {
 					newMeta.displayName(oldMeta.displayName());
 				}
 
 				// item_name component
-				if (oldMeta.hasItemName()
-						&& CreativeItemFilter.plain.serialize(oldMeta.itemName()).length()
-						<= configuration.getDisplayNameMaxLength()) {
+				if (oldMeta.hasItemName() && ComponentUtils.validateComponent(oldMeta.itemName(), nameMaxLength)) {
 					newMeta.itemName(oldMeta.itemName());
 				}
 
-				// lore component
 				int loreMaxLength = configuration.getLoreMaxLength();
+
+				// lore component
 				if (oldMeta.hasLore()) {
 					newMeta.lore(
 						oldMeta.lore().stream()
-						.filter(loreLine -> CreativeItemFilter.plain.serialize(loreLine).length() <= loreMaxLength)
+						.filter(line -> ComponentUtils.validateComponent(line, loreMaxLength))
 						.limit(configuration.getLoreMaxCount())
 						.collect(Collectors.toList())
 					);
 				}
 
 				newItem.setItemMeta(newMeta);
+				newItem.setAmount(Math.min(oldItem.getAmount(), newItem.getMaxStackSize()));
 			}
 
 			// enchantments component
