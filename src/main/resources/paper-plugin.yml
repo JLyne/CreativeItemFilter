@@ -1,5 +1,6 @@
 name: CreativeItemFilter
 main: org.hurricanegames.creativeitemfilter.CreativeItemFilter
+loader: org.hurricanegames.creativeitemfilter.CreativeItemFilterLoader
 api-version: '1.21.1'
 version: '@project.version@'
 authors:
@@ -10,3 +11,15 @@ permissions:
   creativeitemfilter.reload:
     default: op
     description: Allows reloading the configuration
+  creativeitemfilter.bypass:
+    default: false
+    description: Bypasses all item checks
+    children:
+      creativeitemfilter.bypass.filter: true
+      creativeitemfilter.bypass.blacklist: true
+  creativeitemfilter.bypass.filter:
+    default: false
+    description: Bypasses the ItemMeta filtering
+  creativeitemfilter.bypass.blacklist:
+    default: op
+    description: Bypasses the item blacklist

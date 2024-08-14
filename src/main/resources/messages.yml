@@ -1,0 +1,6 @@
+prefix:
+  info: '<bold><green>Item Filter > <reset><light_purple>'
+  warning: '<bold><yellow>Item Filter > <reset><orange>'
+  error: '<bold><red>Item Filter > <reset><yellow>'
+message:
+  item-filtered: <yellow>Sorry, <red><item><yellow> is disabled on this server

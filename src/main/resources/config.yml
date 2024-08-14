@@ -40,3 +40,7 @@ component:
   max_translation_depth: 3
   max_translation_arguments: 10
   max_child_count: 100
+item_blacklist:
+  - 'minecraft:command_block'
+  - 'minecraft:repeating_command_block'
+  - 'minecraft:chain_command_block'

@@ -7,16 +7,21 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
+import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
 import org.hurricanegames.creativeitemfilter.utils.ComponentUtils;
+import uk.co.notnull.messageshelper.Message;
 
 public class CreativeItemFilterHandler implements Listener {
 	private static final ItemFlag[] ITEM_FLAGS_EMPTY = new ItemFlag[0];
@@ -31,11 +36,60 @@ public class CreativeItemFilterHandler implements Listener {
 		this.metaCopierFactory = factory;
 	}
 
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onBlockPlace(BlockPlaceEvent event) {
+		Player player = event.getPlayer();
+
+		if(player.hasPermission("creativeitemfilter.bypass.blacklist")) {
+			return;
+		}
+
+		if(configuration.isItemBlacklisted(event.getItemInHand().getType())) {
+			event.setCancelled(true);
+			player.getInventory().remove(event.getItemInHand().getType());
+			blacklistNotify(player, event.getItemInHand());
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onItemHeld(PlayerItemHeldEvent event) {
+		Player player = event.getPlayer();
+
+		if(player.hasPermission("creativeitemfilter.bypass.blacklist")) {
+			return;
+		}
+
+		ItemStack item = player.getInventory().getItem(event.getNewSlot());
+
+		if(item == null) {
+			return;
+		}
+
+		if(configuration.isItemBlacklisted(item.getType())) {
+			player.getInventory().remove(item.getType());
+			blacklistNotify(player, item);
+		}
+	}
+
 	//TODO: Specific material ItemMeta may extend multiple ItemMeta interfaces, so the code needs to be adapted to be able to handle that
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
 		try {
 			ItemStack oldItem = event.getCursor();
+			Player player = (Player) event.getWhoClicked();
+
+			if(!player.hasPermission("creativeitemfilter.bypass.blacklist") &&
+					configuration.isItemBlacklisted(oldItem.getType())) {
+				event.setCancelled(true);
+				((Player) event.getWhoClicked()).updateInventory();
+				blacklistNotify(player, oldItem);
+
+				return;
+			}
+
+			if(player.hasPermission("creativeitemfilter.bypass.filter")) {
+				return;
+			}
 
 			ItemStack newItem = new ItemStack(oldItem.getType(), oldItem.getAmount());
 
@@ -131,9 +185,19 @@ public class CreativeItemFilterHandler implements Listener {
 
 			event.setCursor(newItem);
 		} catch (Throwable t) {
-			event.setCursor(null);
+			event.setCancelled(true);
 			((Player) event.getWhoClicked()).updateInventory();
 			logger.log(Level.WARNING, "Unable to create safe clone of creative itemstack, removing", t);
 		}
+	}
+
+	private void blacklistNotify(Player player, ItemStack item) {
+		logger.info(String.format("Filtered blacklisted item %s from %s", item.getType(), player.getName()));
+		CreativeItemFilter.getMessagesHelper().send(player, Message
+				.builder("message.item-filtered")
+				.prefixed()
+				.type(Message.MessageType.ERROR)
+				.replacement("item", item.displayName())
+				.build());
 	}
 }

@@ -13,6 +13,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.hurricanegames.creativeitemfilter.handler.CreativeItemFilterHandler;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
+import uk.co.notnull.messageshelper.MessagesHelper;
+
+import java.io.File;
 
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
@@ -21,6 +24,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	private static CreativeItemFilter instance ;
 	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory();
+	private static MessagesHelper messagesHelper;
 
 	public static CreativeItemFilterConfiguration configuration;
 
@@ -28,6 +32,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 	public void onEnable() {
 		instance = this;
 		configuration = new CreativeItemFilterConfiguration(this);
+		messagesHelper = MessagesHelper.getInstance(this);
 
 		loadConfig();
 		getServer().getPluginManager().registerEvents(new CreativeItemFilterHandler(getLogger(), metaCopierFactory,
@@ -41,6 +46,13 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		saveDefaultConfig();
 		reloadConfig();
 		configuration.reloadValues();
+		File messages = new File(getDataFolder(), "messages.yml");
+
+		if(!messages.exists()) {
+			saveResource("messages.yml", false);
+		}
+
+		messagesHelper.loadMessages(messages);
 	}
 
 	private void registerCommands(Commands commands) {
@@ -64,5 +76,9 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	public static CreativeItemFilter getInstance() {
 		return instance;
+	}
+
+	public static MessagesHelper getMessagesHelper() {
+		return messagesHelper;
 	}
 }

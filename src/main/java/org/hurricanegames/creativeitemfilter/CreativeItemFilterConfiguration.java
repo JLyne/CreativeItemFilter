@@ -1,7 +1,10 @@
 package org.hurricanegames.creativeitemfilter;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 public final class CreativeItemFilterConfiguration {
 	private final Plugin plugin;
@@ -30,6 +33,7 @@ public final class CreativeItemFilterConfiguration {
 	private int componentsMaxChildCount;
 	private int damageMax;
 	private int stackSizeMax;
+	private List<String> itemBlacklist;
 
 	public CreativeItemFilterConfiguration(Plugin plugin) {
 		this.plugin = plugin;
@@ -65,6 +69,7 @@ public final class CreativeItemFilterConfiguration {
 		componentsMaxChildCount = config.getInt("component.max_child_count", 100);
 		damageMax = config.getInt("damage.max", 2048);
 		stackSizeMax = config.getInt("stack_size.max", 64);
+		itemBlacklist = config.getStringList("item_blacklist");
 	}
 
 	public int getEnchantmentMaxLevel() {
@@ -165,5 +170,9 @@ public final class CreativeItemFilterConfiguration {
 
 	public int getStackSizeMax() {
 		return stackSizeMax;
+	}
+
+	public boolean isItemBlacklisted(Material material) {
+		return itemBlacklist.contains(material.getKey().toString());
 	}
 }
