@@ -32,7 +32,13 @@ repositories {
 
 dependencies {
 	compileOnly group: 'io.papermc.paper', name: 'paper-api', version: '1.21.1-R0.1-SNAPSHOT'
-    compileOnly 'uk.co.notnull:MessagesHelper-paper:1.1-SNAPSHOT'
+    compileOnly messagesHelperDependency
+}
+
+task processSource(type: Sync) {
+    from sourceSets.main.java
+    filter(ReplaceTokens, tokens: [('messagesHelperDependency'): messagesHelperDependency])
+    into "${layout.buildDirectory.get()}/src"
 }
 
 tasks {
@@ -59,6 +65,8 @@ tasks {
     }
 
     compileJava {
+        dependsOn(clean)
+        source = processSource.outputs
         options.compilerArgs += ["-Xlint:all", "-Xlint:-processing"]
         options.encoding = 'UTF-8'
     }

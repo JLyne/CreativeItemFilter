@@ -13,7 +13,7 @@ public class CreativeItemFilterLoader implements PluginLoader {
 	@Override
 	public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
        	MavenLibraryResolver resolver = new MavenLibraryResolver();
-        resolver.addDependency(new Dependency(new DefaultArtifact("uk.co.notnull:MessagesHelper-paper:1.1-SNAPSHOT"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("@messagesHelperDependency@"), null));
         resolver.addRepository(new RemoteRepository.Builder("notnull", "default", "https://repo.not-null.co.uk/snapshots/").build());
 
         classpathBuilder.addLibrary(resolver);
