@@ -97,7 +97,7 @@ public class CreativeItemFilterHandler implements Listener {
 				ItemMeta oldMeta = oldItem.getItemMeta();
 				ItemMeta newMeta = Bukkit.getItemFactory().getItemMeta(newItem.getType());
 
-				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta));
+				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta, oldItem.getType()));
 
 				if (oldMeta instanceof Damageable oldMetaDamageable) {
 					if(oldMetaDamageable.hasMaxDamage()) {

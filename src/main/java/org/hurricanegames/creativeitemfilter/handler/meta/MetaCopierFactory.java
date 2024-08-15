@@ -26,6 +26,7 @@ public final class MetaCopierFactory {
 		addCopier(FireworkMetaCopier.INSTANCE); // fireworks
 		addCopier(InstrumentMetaCopier.INSTANCE); // instrument
 		addCopier(OminousBottleMetaCopier.INSTANCE); // ominous_bottle_amplifier
+		addCopier(LightBlockMetaCopier.INSTANCE); // Light block levels
 		addCopier(NoOpMetaCopier.INSTANCE);
 	}
 
