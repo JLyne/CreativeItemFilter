@@ -4,14 +4,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.CrafterCraftEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -21,6 +25,7 @@ import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
 import org.hurricanegames.creativeitemfilter.utils.ComponentUtils;
+import org.jetbrains.annotations.Nullable;
 import uk.co.notnull.messageshelper.Message;
 
 public class CreativeItemFilterHandler implements Listener {
@@ -37,37 +42,48 @@ public class CreativeItemFilterHandler implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onBlockPlace(BlockPlaceEvent event) {
+	public void onInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
+		ItemStack item = event.getItem();
 
-		if(player.hasPermission("creativeitemfilter.bypass.blacklist")) {
-			return;
-		}
-
-		if(configuration.isItemBlacklisted(event.getItemInHand().getType())) {
+		if(shouldBlock(item, player)) {
 			event.setCancelled(true);
-			player.getInventory().remove(event.getItemInHand().getType());
-			blacklistNotify(player, event.getItemInHand());
+			player.getInventory().remove(item.getType());
 		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onItemHeld(PlayerItemHeldEvent event) {
-		Player player = event.getPlayer();
-
-		if(player.hasPermission("creativeitemfilter.bypass.blacklist")) {
-			return;
+	public void onItemCraft(CraftItemEvent event) {
+		if(shouldBlock(event.getRecipe().getResult(), (Player) event.getWhoClicked())) {
+			event.setCancelled(true);
 		}
+	}
 
-		ItemStack item = player.getInventory().getItem(event.getNewSlot());
-
-		if(item == null) {
-			return;
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onCrafterCraft(CrafterCraftEvent event) {
+		if(shouldBlock(event.getResult(), null)) {
+			event.setCancelled(true);
 		}
+	}
 
-		if(configuration.isItemBlacklisted(item.getType())) {
-			player.getInventory().remove(item.getType());
-			blacklistNotify(player, item);
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPreDispense(BlockPreDispenseEvent event) {
+		if(shouldBlock(event.getItemStack(), null)) {
+			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onDropItem(PlayerDropItemEvent event) {
+		if(shouldBlock(event.getItemDrop().getItemStack(), event.getPlayer())) {
+			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPickupItem(PlayerAttemptPickupItemEvent event) {
+		if(shouldBlock(event.getItem().getItemStack(), event.getPlayer())) {
+			event.setCancelled(true);
 		}
 	}
 
@@ -78,12 +94,9 @@ public class CreativeItemFilterHandler implements Listener {
 			ItemStack oldItem = event.getCursor();
 			Player player = (Player) event.getWhoClicked();
 
-			if(!player.hasPermission("creativeitemfilter.bypass.blacklist") &&
-					configuration.isItemBlacklisted(oldItem.getType())) {
+			if(shouldBlock(oldItem, player)) {
 				event.setCancelled(true);
 				((Player) event.getWhoClicked()).updateInventory();
-				blacklistNotify(player, oldItem);
-
 				return;
 			}
 
@@ -189,6 +202,22 @@ public class CreativeItemFilterHandler implements Listener {
 			((Player) event.getWhoClicked()).updateInventory();
 			logger.log(Level.WARNING, "Unable to create safe clone of creative itemstack, removing", t);
 		}
+	}
+
+	private boolean shouldBlock(@Nullable ItemStack item, @Nullable Player player) {
+		if(item == null || player != null && player.hasPermission("creativeitemfilter.bypass.blacklist")) {
+			return false;
+		}
+
+		if(configuration.isItemBlacklisted(item.getType())) {
+			if(player != null) {
+				blacklistNotify(player, item);
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void blacklistNotify(Player player, ItemStack item) {
