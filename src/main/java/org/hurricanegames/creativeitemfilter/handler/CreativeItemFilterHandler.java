@@ -28,6 +28,7 @@ import org.hurricanegames.creativeitemfilter.utils.ComponentUtils;
 import org.jetbrains.annotations.Nullable;
 import uk.co.notnull.messageshelper.Message;
 
+@SuppressWarnings("UnstableApiUsage")
 public class CreativeItemFilterHandler implements Listener {
 	private static final ItemFlag[] ITEM_FLAGS_EMPTY = new ItemFlag[0];
 
@@ -150,8 +151,10 @@ public class CreativeItemFilterHandler implements Listener {
 				// hide_tooltip component
 				newMeta.setHideTooltip(oldMeta.isHideTooltip());
 
-				// fire_resistant component
-				newMeta.setFireResistant(oldMeta.isFireResistant());
+				// damage_resistant component
+				if(oldMeta.hasDamageResistant()) {
+					newMeta.setDamageResistant(oldMeta.getDamageResistant());
+				}
 
 				// rarity component
 				if(oldMeta.hasRarity()) {
