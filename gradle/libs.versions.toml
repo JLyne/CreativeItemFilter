@@ -1,0 +1,11 @@
+[versions]
+messagesHelperVersion = "1.1-SNAPSHOT"
+pluginYmlPaperVersion = "0.6.0"
+paperApiVersion = "1.21.4-R0.1-SNAPSHOT"
+
+[libraries]
+messagesHelper = { group = "uk.co.notnull", name= "MessagesHelper-paper", version.ref = "messagesHelperVersion" }
+paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApiVersion" }
+
+[plugins]
+pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYmlPaperVersion" }
