@@ -143,6 +143,11 @@ public class CreativeItemFilterHandler implements Listener {
 					newMeta.setCustomModelDataComponent(oldMeta.getCustomModelDataComponent());
 				}
 
+				// item_model component
+				if (oldMeta.hasItemModel()) {
+					newMeta.setItemModel(oldMeta.getItemModel());
+				}
+
 				// max_stack_size component
 				if(oldMeta.hasMaxStackSize()) {
 					newMeta.setMaxStackSize(Math.min(oldMeta.getMaxStackSize(), configuration.getStackSizeMax()));
