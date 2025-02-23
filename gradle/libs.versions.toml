@@ -1,6 +1,6 @@
 [versions]
 messagesHelperVersion = "1.1-SNAPSHOT"
-pluginYmlPaperVersion = "0.6.0"
+pluginYmlPaperVersion = "0.7.1"
 paperApiVersion = "1.21.4-R0.1-SNAPSHOT"
 
 [libraries]
@@ -8,4 +8,4 @@ messagesHelper = { group = "uk.co.notnull", name= "MessagesHelper-paper", versio
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApiVersion" }
 
 [plugins]
-pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYmlPaperVersion" }
+pluginYmlPaper = { id = "de.eldoria.plugin-yml.paper", version.ref = "pluginYmlPaperVersion" }
