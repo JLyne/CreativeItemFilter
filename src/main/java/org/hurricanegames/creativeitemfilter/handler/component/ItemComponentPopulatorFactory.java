@@ -19,7 +19,11 @@ public final class ItemComponentPopulatorFactory {
 		addPopulator(new MapComponentPopulator());
 		addPopulator(new OminousBottleComponentPopulator());
 		addPopulator(new PotionComponentPopulator());
+		addPopulator(new PotDecorationComponentPopulator());
+		addPopulator(new ProfileComponentPopulator());
 		addPopulator(new StoredEnchantmentsComponentPopulator());
+		addPopulator(new SuspiciousStewEffectComponentPopulator());
+		addPopulator(new TrimComponentPopulator());
 		addPopulator(new WritableBookComponentPopulator());
 		addPopulator(new WrittenBookComponentPopulator());
 	}

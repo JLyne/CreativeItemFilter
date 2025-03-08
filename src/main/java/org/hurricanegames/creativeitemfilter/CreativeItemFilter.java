@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.hurricanegames.creativeitemfilter.handler.CreativeItemFilterHandler;
 import org.hurricanegames.creativeitemfilter.handler.component.ItemComponentPopulatorFactory;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
+import org.jetbrains.annotations.NotNull;
 import uk.co.notnull.messageshelper.MessagesHelper;
 
 import java.io.File;
@@ -41,7 +42,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 				new CreativeItemFilterHandler(getLogger(), metaCopierFactory, componentPopulatorFactory, configuration),
 				this);
 
-		LifecycleEventManager<Plugin> manager = getLifecycleManager();
+		LifecycleEventManager<@NotNull Plugin> manager = getLifecycleManager();
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> registerCommands(event.registrar()));
 	}
 

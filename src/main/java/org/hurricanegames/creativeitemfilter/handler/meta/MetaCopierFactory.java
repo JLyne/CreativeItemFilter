@@ -31,9 +31,7 @@ public final class MetaCopierFactory {
 	public <T extends ItemMeta> void removeCopier(MetaCopier<T> copier) {
 		copiers.remove(copier);
 
-		cache.forEach((metaClass, value) -> {
-			value.remove(copier);
-		});
+		cache.forEach((metaClass, value) -> value.remove(copier));
 	}
 
 	@SuppressWarnings("unchecked")
