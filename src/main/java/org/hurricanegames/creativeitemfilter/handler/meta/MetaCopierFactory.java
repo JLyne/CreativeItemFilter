@@ -7,27 +7,14 @@ import java.util.Map;
 
 import org.bukkit.inventory.meta.ItemMeta;
 
+
 public final class MetaCopierFactory {
 	private final List<MetaCopier<? extends ItemMeta>> copiers = new ArrayList<>();
 	private final Map<Class<? extends ItemMeta>, List<MetaCopier<ItemMeta>>> cache = new HashMap<>();
 
 	public MetaCopierFactory() {
-		addCopier(LeatherArmorMetaCopier.INSTANCE);
-		addCopier(CompassMetaCopier.INSTANCE); // lodestone_tracker
 		addCopier(TropicalFishBucketMetaCopier.INSTANCE);
-		addCopier(BannerMetaCopier.INSTANCE); // banner_patterns
-		addCopier(MapMetaCopier.INSTANCE); // map_id, map_decorations, map_color
-		addCopier(EnchantmentStorageMetaCopier.INSTANCE); // stored_enchants
-		addCopier(WrittenBookMetaCopier.INSTANCE); // written_book_contents
-		addCopier(WritableBookMetaCopier.INSTANCE); // writable_book_contents
-		addCopier(KnowledgeBookMetaCopier.INSTANCE); // recipes
-		addCopier(PotionMetaCopier.INSTANCE); // potion_contents
-		addCopier(FireworkEffectMetaCopier.INSTANCE); // firework_explosion
-		addCopier(FireworkMetaCopier.INSTANCE); // fireworks
-		addCopier(InstrumentMetaCopier.INSTANCE); // instrument
-		addCopier(OminousBottleMetaCopier.INSTANCE); // ominous_bottle_amplifier
 		addCopier(LightBlockMetaCopier.INSTANCE); // Light block levels
-		addCopier(NoOpMetaCopier.INSTANCE);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -6,7 +6,7 @@ import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import java.util.List;
 import java.util.logging.Logger;
 
-public final class ComponentUtils {
+public final class ChatComponentUtils {
 	private static final ComponentValidator VALIDATOR = new ComponentValidator();
 
 	public static boolean validateComponent(Component component, int maxLength) {

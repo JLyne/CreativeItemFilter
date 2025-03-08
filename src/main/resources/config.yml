@@ -4,9 +4,6 @@ enchantment:
   remove_unapplicable: false
 display_name:
   max_length: 64
-lore:
-  max_length: 64
-  max_count: 32
 enchantment_book:
   max_level: 15
   max_count: 6
@@ -31,10 +28,6 @@ firework:
   max_effects: 8
 knowledge_book:
   max_recipes: 10
-stack_size:
-  max: 64
-damage:
-  max: 2048
 component:
   max_child_depth: 10
   max_translation_depth: 3

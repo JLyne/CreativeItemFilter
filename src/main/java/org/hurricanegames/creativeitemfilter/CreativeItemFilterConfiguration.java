@@ -12,8 +12,6 @@ public final class CreativeItemFilterConfiguration {
 	private int enchantmentMaxCount;
 	private boolean enchantmentRemoveUnapplicable;
 	private int displayNameMaxLength;
-	private int loreMaxLength;
-	private int loreMaxCount;
 	private int enchantedBookMaxLevel;
 	private int enchantedBookMaxCount;
 	private int bookAuthorMaxLength;
@@ -31,8 +29,6 @@ public final class CreativeItemFilterConfiguration {
 	private int componentsMaxArgumentDepth;
 	private int componentsMaxArgumentCount;
 	private int componentsMaxChildCount;
-	private int damageMax;
-	private int stackSizeMax;
 	private List<String> itemBlacklist;
 
 	public CreativeItemFilterConfiguration(Plugin plugin) {
@@ -48,8 +44,6 @@ public final class CreativeItemFilterConfiguration {
 		enchantmentMaxCount = config.getInt("enchantment.max_count", 6);
 		enchantmentRemoveUnapplicable = config.getBoolean("enchantment.remove_unapplicable");
 		displayNameMaxLength = config.getInt("display_name.max_length", 64);
-		loreMaxCount = config.getInt("lore.max_count", 32);
-		loreMaxLength = config.getInt("lore.max_length", 64);
 		enchantedBookMaxLevel = config.getInt("enchantment_book.max_level", 15);
 		enchantedBookMaxCount = config.getInt("enchantment_book.max_count", 6);
 		bookAuthorMaxLength = config.getInt("book.author.max_length", 16);
@@ -67,8 +61,6 @@ public final class CreativeItemFilterConfiguration {
 		componentsMaxArgumentDepth = config.getInt("component.max_translation_depth", 3);
 		componentsMaxArgumentCount = config.getInt("component.max_translation_arguments", 10);
 		componentsMaxChildCount = config.getInt("component.max_child_count", 100);
-		damageMax = config.getInt("damage.max", 2048);
-		stackSizeMax = config.getInt("stack_size.max", 64);
 		itemBlacklist = config.getStringList("item_blacklist");
 	}
 
@@ -86,14 +78,6 @@ public final class CreativeItemFilterConfiguration {
 
 	public int getDisplayNameMaxLength() {
 		return displayNameMaxLength;
-	}
-
-	public int getLoreMaxLength() {
-		return loreMaxLength;
-	}
-
-	public int getLoreMaxCount() {
-		return loreMaxCount;
 	}
 
 	public int getEnchantmentBookMaxLevel() {
@@ -162,14 +146,6 @@ public final class CreativeItemFilterConfiguration {
 
 	public int getComponentMaxChildCount() {
 		return componentsMaxChildCount;
-	}
-
-	public int getDamageMax() {
-		return damageMax;
-	}
-
-	public int getStackSizeMax() {
-		return stackSizeMax;
 	}
 
 	public boolean isItemBlacklisted(Material material) {

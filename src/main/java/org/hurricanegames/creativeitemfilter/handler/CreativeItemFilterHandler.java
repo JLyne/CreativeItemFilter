@@ -1,9 +1,10 @@
 package org.hurricanegames.creativeitemfilter.handler;
 
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
+import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,30 +17,29 @@ import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.Repairable;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilter;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
+import org.hurricanegames.creativeitemfilter.handler.component.ItemComponentPopulatorFactory;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
-import org.hurricanegames.creativeitemfilter.utils.ComponentUtils;
 import org.jetbrains.annotations.Nullable;
 import uk.co.notnull.messageshelper.Message;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CreativeItemFilterHandler implements Listener {
-	private static final ItemFlag[] ITEM_FLAGS_EMPTY = new ItemFlag[0];
-
 	private final Logger logger;
 	private final CreativeItemFilterConfiguration configuration;
 	private final MetaCopierFactory metaCopierFactory;
+	private final ItemComponentPopulatorFactory componentPopulatorFactory;
 
-	public CreativeItemFilterHandler(Logger logger, MetaCopierFactory factory, CreativeItemFilterConfiguration configuration) {
+	public CreativeItemFilterHandler(Logger logger, MetaCopierFactory metaFactory,
+									 ItemComponentPopulatorFactory componentFactory,
+									 CreativeItemFilterConfiguration configuration) {
 		this.logger = logger;
 		this.configuration = configuration;
-		this.metaCopierFactory = factory;
+		this.metaCopierFactory = metaFactory;
+		this.componentPopulatorFactory = componentFactory;
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -106,104 +106,26 @@ public class CreativeItemFilterHandler implements Listener {
 			}
 
 			ItemStack newItem = new ItemStack(oldItem.getType(), oldItem.getAmount());
+			Set<DataComponentType> oldDataTypes = oldItem.getDataTypes();
 
+			// Copy removal of default components from old item
+			newItem.getDataTypes().stream().filter(type -> !oldDataTypes.contains(type))
+					.forEach(newItem::resetData);
+
+			//TODO: Remove once everything is using the new api
 			if (oldItem.hasItemMeta()) {
 				ItemMeta oldMeta = oldItem.getItemMeta();
 				ItemMeta newMeta = Bukkit.getItemFactory().getItemMeta(newItem.getType());
 
 				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta, oldItem.getType()));
 
-				if (oldMeta instanceof Damageable oldMetaDamageable) {
-					if(oldMetaDamageable.hasMaxDamage()) {
-						// max_damage component
-						((Damageable) newMeta).setMaxDamage(Math.min(oldMetaDamageable.getMaxDamage(), configuration.getDamageMax()));
-
-						// damage component
-						if(oldMetaDamageable.hasDamage()) {
-							((Damageable) newMeta).setDamage(Math.min(oldMetaDamageable.getDamage(), ((Damageable) newMeta).getMaxDamage()));
-						}
-					} else if(oldMetaDamageable.hasDamage()) {
-						// damage component
-						((Damageable) newMeta).setDamage(oldMetaDamageable.getDamage());
-					}
-				}
-
-				// enchantment_glint_override component
-				if (oldMeta.hasEnchantmentGlintOverride()) {
-					newMeta.setEnchantmentGlintOverride(oldMeta.getEnchantmentGlintOverride());
-				}
-
-				// repair_cost component
-				if (oldMeta instanceof Repairable) {
-					((Repairable) newMeta).setRepairCost(((Repairable) oldMeta).getRepairCost());
-				}
-
-				// custom_model_data component
-				if (oldMeta.hasCustomModelData()) {
-					newMeta.setCustomModelDataComponent(oldMeta.getCustomModelDataComponent());
-				}
-
-				// item_model component
-				if (oldMeta.hasItemModel()) {
-					newMeta.setItemModel(oldMeta.getItemModel());
-				}
-
-				// max_stack_size component
-				if(oldMeta.hasMaxStackSize()) {
-					newMeta.setMaxStackSize(Math.min(oldMeta.getMaxStackSize(), configuration.getStackSizeMax()));
-				}
-
-				// hide_tooltip component
-				newMeta.setHideTooltip(oldMeta.isHideTooltip());
-
-				// damage_resistant component
-				if(oldMeta.hasDamageResistant()) {
-					newMeta.setDamageResistant(oldMeta.getDamageResistant());
-				}
-
-				// rarity component
-				if(oldMeta.hasRarity()) {
-					newMeta.setRarity(oldMeta.getRarity());
-				}
-
-				newMeta.addItemFlags(oldMeta.getItemFlags().toArray(ITEM_FLAGS_EMPTY));
-
-				int nameMaxLength = configuration.getDisplayNameMaxLength();
-
-				// custom_name component
-				if (oldMeta.hasDisplayName() && ComponentUtils.validateComponent(oldMeta.displayName(), nameMaxLength)) {
-					newMeta.displayName(oldMeta.displayName());
-				}
-
-				// item_name component
-				if (oldMeta.hasItemName() && ComponentUtils.validateComponent(oldMeta.itemName(), nameMaxLength)) {
-					newMeta.itemName(oldMeta.itemName());
-				}
-
-				int loreMaxLength = configuration.getLoreMaxLength();
-
-				// lore component
-				if (oldMeta.hasLore()) {
-					newMeta.lore(
-						oldMeta.lore().stream()
-						.filter(line -> ComponentUtils.validateComponent(line, loreMaxLength))
-						.limit(configuration.getLoreMaxCount())
-						.collect(Collectors.toList())
-					);
-				}
-
 				newItem.setItemMeta(newMeta);
-				newItem.setAmount(Math.min(oldItem.getAmount(), newItem.getMaxStackSize()));
 			}
 
-			// enchantments component
-			int enchantmentMaxLevel = configuration.getEnchantmentMaxLevel();
-			oldItem.getEnchantments().entrySet().stream()
-			.filter(entry -> (entry.getValue() > 0) && (entry.getValue() <= enchantmentMaxLevel))
-			.filter(configuration.getEnchantmentRemoveUnapplicableEnabled() ? entry -> entry.getKey().canEnchantItem(newItem) : entry -> true)
-			.limit(configuration.getEnchantmentMaxCount())
-			.forEach(entry -> newItem.addUnsafeEnchantment(entry.getKey(), entry.getValue()));
+			componentPopulatorFactory.getPopulators().forEach(
+					populator -> populator.populateComponents(oldItem, newItem, configuration));
 
+			newItem.setAmount(Math.min(oldItem.getAmount(), newItem.getMaxStackSize()));
 			event.setCursor(newItem);
 		} catch (Throwable t) {
 			event.setCancelled(true);

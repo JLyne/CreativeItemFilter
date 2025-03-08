@@ -5,6 +5,7 @@ import org.bukkit.block.data.type.Light;
 import org.bukkit.inventory.meta.BlockDataMeta;
 import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 
+//TODO: Move to component populator once the block property api exists=
 public class LightBlockMetaCopier implements MetaCopier<BlockDataMeta> {
 	public static final LightBlockMetaCopier INSTANCE = new LightBlockMetaCopier();
 
@@ -20,7 +21,7 @@ public class LightBlockMetaCopier implements MetaCopier<BlockDataMeta> {
 				Light blockData = (Light) Material.LIGHT.createBlockData();
 				blockData.setLevel(level);
 				newMeta.setBlockData(blockData);
-			};
+			}
 		}
 	}
 

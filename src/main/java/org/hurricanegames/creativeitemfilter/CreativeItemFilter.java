@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.hurricanegames.creativeitemfilter.handler.CreativeItemFilterHandler;
+import org.hurricanegames.creativeitemfilter.handler.component.ItemComponentPopulatorFactory;
 import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
 import uk.co.notnull.messageshelper.MessagesHelper;
 
@@ -24,6 +25,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	private static CreativeItemFilter instance ;
 	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory();
+	private final ItemComponentPopulatorFactory componentPopulatorFactory = new ItemComponentPopulatorFactory();
 	private static MessagesHelper messagesHelper;
 
 	public static CreativeItemFilterConfiguration configuration;
@@ -35,8 +37,9 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		messagesHelper = MessagesHelper.getInstance(this);
 
 		loadConfig();
-		getServer().getPluginManager().registerEvents(new CreativeItemFilterHandler(getLogger(), metaCopierFactory,
-																					configuration), this);
+		getServer().getPluginManager().registerEvents(
+				new CreativeItemFilterHandler(getLogger(), metaCopierFactory, componentPopulatorFactory, configuration),
+				this);
 
 		LifecycleEventManager<Plugin> manager = getLifecycleManager();
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> registerCommands(event.registrar()));
@@ -72,6 +75,10 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	public MetaCopierFactory getMetaCopierFactory() {
 		return metaCopierFactory;
+	}
+
+	public ItemComponentPopulatorFactory getComponentPopulatorFactory() {
+		return componentPopulatorFactory;
 	}
 
 	public static CreativeItemFilter getInstance() {
