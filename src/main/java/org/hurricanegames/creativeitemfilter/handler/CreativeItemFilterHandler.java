@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
+import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,6 +33,7 @@ public class CreativeItemFilterHandler implements Listener {
 	private final CreativeItemFilterConfiguration configuration;
 	private final MetaCopierFactory metaCopierFactory;
 	private final ItemComponentPopulatorFactory componentPopulatorFactory;
+	private boolean alreadyChecked = false;
 
 	public CreativeItemFilterHandler(Logger logger, MetaCopierFactory metaFactory,
 									 ItemComponentPopulatorFactory componentFactory,
@@ -88,49 +90,76 @@ public class CreativeItemFilterHandler implements Listener {
 		}
 	}
 
-	//TODO: Specific material ItemMeta may extend multiple ItemMeta interfaces, so the code needs to be adapted to be able to handle that
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onSlotChange(PlayerInventorySlotChangeEvent event) {
+		if(alreadyChecked) {
+			alreadyChecked = false;
+			return;
+		}
+
+		Player player = event.getPlayer();
+		ItemStack newItem = handleItem(event.getNewItemStack(), player);
+
+		if(newItem == null) {
+			player.getInventory().setItem(event.getSlot(), event.getOldItemStack());
+		} else {
+			player.getInventory().setItem(event.getSlot(), newItem);
+		}
+	}
+
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
-		try {
-			ItemStack oldItem = event.getCursor();
-			Player player = (Player) event.getWhoClicked();
+		CreativeItemFilter.getInstance().getLogger().info("InventoryCreativeEvent " + event.getCursor());
+		ItemStack oldItem = event.getCursor();
+		Player player = (Player) event.getWhoClicked();
 
-			if(shouldBlock(oldItem, player)) {
-				event.setCancelled(true);
-				((Player) event.getWhoClicked()).updateInventory();
-				return;
+		ItemStack newItem = handleItem(oldItem, player);
+
+		if(newItem == null) {
+			event.setCancelled(true);
+			((Player) event.getWhoClicked()).updateInventory();
+		} else {
+			event.setCursor(newItem);
+		}
+
+		alreadyChecked = true;
+	}
+
+	private ItemStack handleItem(ItemStack item, Player player) {
+		try {
+			if(shouldBlock(item, player)) {
+				return null;
 			}
 
 			if(player.hasPermission("creativeitemfilter.bypass.filter")) {
-				return;
+				return item;
 			}
 
-			ItemStack newItem = new ItemStack(oldItem.getType(), oldItem.getAmount());
-			Set<DataComponentType> oldDataTypes = oldItem.getDataTypes();
+			ItemStack newItem = new ItemStack(item.getType(), item.getAmount());
+			Set<DataComponentType> oldDataTypes = item.getDataTypes();
 
 			// Copy removal of default components from old item
 			newItem.getDataTypes().stream().filter(type -> !oldDataTypes.contains(type))
 					.forEach(newItem::resetData);
 
 			//TODO: Remove once everything is using the new api
-			if (oldItem.hasItemMeta()) {
-				ItemMeta oldMeta = oldItem.getItemMeta();
+			if (item.hasItemMeta()) {
+				ItemMeta oldMeta = item.getItemMeta();
 				ItemMeta newMeta = Bukkit.getItemFactory().getItemMeta(newItem.getType());
 
-				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta, oldItem.getType()));
+				metaCopierFactory.getCopiers(oldMeta).forEach(copier -> copier.copyValidMeta(configuration, oldMeta, newMeta, item.getType()));
 
 				newItem.setItemMeta(newMeta);
 			}
 
 			componentPopulatorFactory.getPopulators().forEach(
-					populator -> populator.populateComponents(oldItem, newItem, configuration));
+					populator -> populator.populateComponents(item, newItem, configuration));
 
-			newItem.setAmount(Math.min(oldItem.getAmount(), newItem.getMaxStackSize()));
-			event.setCursor(newItem);
+			newItem.setAmount(Math.min(item.getAmount(), newItem.getMaxStackSize()));
+			return newItem;
 		} catch (Throwable t) {
-			event.setCancelled(true);
-			((Player) event.getWhoClicked()).updateInventory();
 			logger.log(Level.WARNING, "Unable to create safe clone of creative itemstack, removing", t);
+			return null;
 		}
 	}
 
