@@ -12,7 +12,7 @@ public class PotDecorationComponentPopulator implements ItemComponentPopulator {
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,
 								   CreativeItemFilterConfiguration configuration) {
-		if(oldItem.getType() == Material.DECORATED_POT) {
+		if(oldItem.getType() != Material.DECORATED_POT) {
 			return;
 		}
 

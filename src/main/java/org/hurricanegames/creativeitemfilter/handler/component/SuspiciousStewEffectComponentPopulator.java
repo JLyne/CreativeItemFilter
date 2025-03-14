@@ -14,7 +14,7 @@ public class SuspiciousStewEffectComponentPopulator implements ItemComponentPopu
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,
 								   CreativeItemFilterConfiguration configuration) {
-		if(oldItem.getType() == Material.SUSPICIOUS_STEW) {
+		if(oldItem.getType() != Material.SUSPICIOUS_STEW) {
 			return;
 		}
 
