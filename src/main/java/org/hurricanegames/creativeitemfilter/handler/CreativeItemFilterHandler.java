@@ -108,7 +108,7 @@ public class CreativeItemFilterHandler implements Listener {
 
 		if(newItem == null) {
 			player.getOpenInventory().setItem(event.getRawSlot(), event.getOldItemStack());
-		} else {
+		} else if(event.getNewItemStack() != newItem) {
 			player.getOpenInventory().setItem(event.getRawSlot(), newItem);
 		}
 	}
@@ -137,6 +137,11 @@ public class CreativeItemFilterHandler implements Listener {
 			}
 
 			if(player.hasPermission("creativeitemfilter.bypass.filter")) {
+				return item;
+			}
+
+			// Stop early if no custom components on item
+			if(item.getDataTypes().stream().noneMatch(item::isDataOverridden)) {
 				return item;
 			}
 
