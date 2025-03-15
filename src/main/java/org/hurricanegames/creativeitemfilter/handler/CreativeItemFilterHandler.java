@@ -107,15 +107,14 @@ public class CreativeItemFilterHandler implements Listener {
 		newItem = handleItem(event.getNewItemStack(), player);
 
 		if(newItem == null) {
-			player.getInventory().setItem(event.getSlot(), event.getOldItemStack());
+			player.getOpenInventory().setItem(event.getRawSlot(), event.getOldItemStack());
 		} else {
-			player.getInventory().setItem(event.getSlot(), newItem);
+			player.getOpenInventory().setItem(event.getRawSlot(), newItem);
 		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
-		CreativeItemFilter.getInstance().getLogger().info("InventoryCreativeEvent " + event.getCursor());
 		ItemStack oldItem = event.getCursor();
 		Player player = (Player) event.getWhoClicked();
 
