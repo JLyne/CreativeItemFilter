@@ -98,7 +98,13 @@ public class CreativeItemFilterHandler implements Listener {
 		}
 
 		Player player = event.getPlayer();
-		ItemStack newItem = handleItem(event.getNewItemStack(), player);
+		ItemStack newItem = event.getNewItemStack();
+
+		if(newItem.isEmpty()) {
+			return;
+		}
+
+		newItem = handleItem(event.getNewItemStack(), player);
 
 		if(newItem == null) {
 			player.getInventory().setItem(event.getSlot(), event.getOldItemStack());
