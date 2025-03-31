@@ -33,4 +33,15 @@ public class ItemComponentUtils {
 			}
 		}
 	}
+
+	@SuppressWarnings("UnstableApiUsage")
+	public static void copyComponent(ItemStack oldItem, ItemStack newItem, DataComponentType.NonValued component) {
+		if(oldItem.isDataOverridden(component)) {
+			if(oldItem.hasData(component)) {
+				newItem.setData(component);
+			} else {
+				newItem.unsetData(component);
+			}
+		}
+	}
 }
