@@ -23,8 +23,7 @@ public class EnchantmentsComponentPopulator implements ItemComponentPopulator {
 
 		int enchantmentMaxLevel = configuration.getEnchantmentMaxLevel();
 
-		ItemEnchantments.Builder newComponent =  ItemEnchantments.itemEnchantments()
-				.showInTooltip(component.showInTooltip());
+		ItemEnchantments.Builder newComponent =  ItemEnchantments.itemEnchantments();
 
 		component.enchantments().entrySet().stream()
 				.filter(entry ->

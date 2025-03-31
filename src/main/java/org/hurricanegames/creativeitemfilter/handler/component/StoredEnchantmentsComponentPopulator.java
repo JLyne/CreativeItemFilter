@@ -28,8 +28,7 @@ public class StoredEnchantmentsComponentPopulator implements ItemComponentPopula
 
 		int enchantmentMaxLevel = configuration.getEnchantmentBookMaxLevel();
 
-		ItemEnchantments.Builder newComponent =  ItemEnchantments.itemEnchantments()
-				.showInTooltip(component.showInTooltip());
+		ItemEnchantments.Builder newComponent =  ItemEnchantments.itemEnchantments();
 
 		component.enchantments().entrySet().stream()
 				.filter(entry ->
