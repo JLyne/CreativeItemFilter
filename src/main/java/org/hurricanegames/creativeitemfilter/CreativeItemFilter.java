@@ -21,7 +21,6 @@ import java.io.File;
 
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
-@SuppressWarnings("UnstableApiUsage")
 public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	private static CreativeItemFilter instance ;
