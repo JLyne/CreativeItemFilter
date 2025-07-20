@@ -145,7 +145,7 @@ public class CreativeItemFilterHandler implements Listener {
 				return item;
 			}
 
-			ItemStack newItem = new ItemStack(item.getType(), item.getAmount());
+			ItemStack newItem = ItemStack.of(item.getType(), item.getAmount());
 			Set<DataComponentType> oldDataTypes = item.getDataTypes();
 
 			// Copy removal of default components from old item
