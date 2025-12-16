@@ -1,7 +1,7 @@
 [versions]
 messagesHelperVersion = "1.1-SNAPSHOT"
 pluginYmlPaperVersion = "0.8.0"
-paperApiVersion = "1.21.10-R0.1-SNAPSHOT"
+paperApiVersion = "1.21.11-R0.1-SNAPSHOT"
 
 [libraries]
 messagesHelper = { group = "uk.co.notnull", name= "MessagesHelper-paper", version.ref = "messagesHelperVersion" }

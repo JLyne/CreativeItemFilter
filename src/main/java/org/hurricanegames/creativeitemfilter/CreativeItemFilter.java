@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import uk.co.notnull.messageshelper.MessagesHelper;
 
 import java.io.File;
+import java.io.IOException;
 
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
@@ -55,7 +56,11 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 			saveResource("messages.yml", false);
 		}
 
-		messagesHelper.loadMessages(messages);
+		try {
+			messagesHelper.loadMessages(messages);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void registerCommands(Commands commands) {
