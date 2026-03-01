@@ -15,6 +15,7 @@ public final class MetaCopierFactory {
 	public MetaCopierFactory() {
 		addCopier(TropicalFishBucketMetaCopier.INSTANCE);
 		addCopier(LightBlockMetaCopier.INSTANCE); // Light block levels
+		addCopier(CopperGolemStatueMetaCopier.INSTANCE); // Copper Golem Status poses
 	}
 
 	@SuppressWarnings("unchecked")

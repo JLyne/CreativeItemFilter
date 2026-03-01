@@ -18,6 +18,7 @@ public final class ItemComponentPopulatorFactory {
 		addPopulator(new KnowledgeBookComponentPopulator());
 		addPopulator(new MapComponentPopulator());
 		addPopulator(new OminousBottleComponentPopulator());
+		addPopulator(new PaintingVariantComponentPopulator());
 		addPopulator(new PotionComponentPopulator());
 		addPopulator(new PotDecorationComponentPopulator());
 		addPopulator(new ProfileComponentPopulator());
