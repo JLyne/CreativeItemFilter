@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
+import io.papermc.paper.event.player.PlayerPickItemEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +34,7 @@ public class CreativeItemFilterHandler implements Listener {
 	private final CreativeItemFilterConfiguration configuration;
 	private final MetaCopierFactory metaCopierFactory;
 	private final ItemComponentPopulatorFactory componentPopulatorFactory;
-	private boolean alreadyChecked = false;
+	private boolean isPicking = false;
 
 	public CreativeItemFilterHandler(Logger logger, MetaCopierFactory metaFactory,
 									 ItemComponentPopulatorFactory componentFactory,
@@ -92,8 +93,7 @@ public class CreativeItemFilterHandler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onSlotChange(PlayerInventorySlotChangeEvent event) {
-		if(alreadyChecked) {
-			alreadyChecked = false;
+		if(!isPicking) {
 			return;
 		}
 
@@ -107,10 +107,12 @@ public class CreativeItemFilterHandler implements Listener {
 		newItem = handleItem(event.getNewItemStack(), player);
 
 		if(newItem == null) {
-			player.getOpenInventory().setItem(event.getRawSlot(), event.getOldItemStack());
+			player.getInventory().setItem(event.getSlot(), event.getOldItemStack());
 		} else if(event.getNewItemStack() != newItem) {
-			player.getOpenInventory().setItem(event.getRawSlot(), newItem);
+			player.getInventory().setItem(event.getSlot(), newItem);
 		}
+
+		isPicking = false;
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -126,8 +128,11 @@ public class CreativeItemFilterHandler implements Listener {
 		} else {
 			event.setCursor(newItem);
 		}
+	}
 
-		alreadyChecked = true;
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onCreativeItemEvent(PlayerPickItemEvent event) {
+		isPicking = true;
 	}
 
 	private ItemStack handleItem(ItemStack item, Player player) {
