@@ -13,7 +13,8 @@ import java.util.List;
 public final class BasicComponentPopulator implements ItemComponentPopulator {
 	private static final List<DataComponentType.Valued<?>> basicComponents = List.of(
 			DataComponentTypes.REPAIR_COST,
-			DataComponentTypes.DAMAGE
+			DataComponentTypes.DAMAGE,
+			DataComponentTypes.DYED_COLOR
 	);
 
 	@SuppressWarnings({"rawtypes", "unchecked"})

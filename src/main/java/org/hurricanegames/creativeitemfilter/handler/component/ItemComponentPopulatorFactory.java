@@ -11,7 +11,6 @@ public final class ItemComponentPopulatorFactory {
 		addPopulator(new BannerComponentPopulator());
 		addPopulator(new CompassComponentPopulator());
 		addPopulator(new CustomNameComponentPopulator());
-		addPopulator(new DyeableComponentPopulator());
 		addPopulator(new EnchantmentsComponentPopulator());
 		addPopulator(new FireworkComponentPopulator());
 		addPopulator(new InstrumentComponentPopulator());

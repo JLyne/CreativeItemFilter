@@ -34,7 +34,7 @@ paper {
     main = "org.hurricanegames.creativeitemfilter.CreativeItemFilter"
     loader = "org.hurricanegames.creativeitemfilter.CreativeItemFilterLoader"
     generateLibrariesJson = true
-    apiVersion = libs.versions.paperApiVersion.get().replace(Regex("\\-R\\d.\\d-SNAPSHOT"), "")
+    apiVersion = libs.versions.paperApiVersion.get().replace(".build.+", "")
     authors = listOf("Jim (AnEnragedPigeon)", "_Shevchik_")
 
     permissions {
