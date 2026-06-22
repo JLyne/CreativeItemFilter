@@ -9,10 +9,16 @@ public class TropicalFishBucketMetaCopier implements MetaCopier<TropicalFishBuck
 
 	@Override
 	public void copyValidMeta(CreativeItemFilterConfiguration configuration, TropicalFishBucketMeta oldMeta, TropicalFishBucketMeta newMeta) {
-		if (oldMeta.hasVariant()) {
+		if (oldMeta.hasPatternColor()) {
 			newMeta.setPatternColor(oldMeta.getPatternColor());
-			newMeta.setBodyColor(oldMeta.getBodyColor());
+		}
+
+		if (oldMeta.hasPattern()) {
 			newMeta.setPattern(oldMeta.getPattern());
+		}
+
+		if (oldMeta.hasBodyColor()) {
+			newMeta.setBodyColor(oldMeta.getBodyColor());
 		}
 	}
 
