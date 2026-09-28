@@ -7,7 +7,6 @@ import org.hurricanegames.creativeitemfilter.CreativeItemFilterConfiguration;
 import org.hurricanegames.creativeitemfilter.utils.ItemComponentUtils;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("UnstableApiUsage")
 public class PotDecorationComponentPopulator implements ItemComponentPopulator {
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,

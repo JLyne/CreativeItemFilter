@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@SuppressWarnings("UnstableApiUsage")
 public class PotionComponentPopulator implements ItemComponentPopulator {
 	private static final List<Material> potions = List.of(Material.POTION, Material.SPLASH_POTION,
 														  Material.LINGERING_POTION, Material.TIPPED_ARROW);

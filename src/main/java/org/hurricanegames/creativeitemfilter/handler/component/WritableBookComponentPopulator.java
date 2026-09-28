@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
-@SuppressWarnings("UnstableApiUsage")
 public class WritableBookComponentPopulator implements ItemComponentPopulator {
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,

@@ -8,7 +8,6 @@ import org.hurricanegames.creativeitemfilter.utils.ItemComponentUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class MapComponentPopulator implements ItemComponentPopulator {
-	@SuppressWarnings("UnstableApiUsage")
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,
 								   CreativeItemFilterConfiguration configuration) {
@@ -17,7 +16,6 @@ public class MapComponentPopulator implements ItemComponentPopulator {
 		}
 
 		ItemComponentUtils.copyComponent(oldItem, newItem, DataComponentTypes.MAP_ID);
-		ItemComponentUtils.copyComponent(oldItem, newItem, DataComponentTypes.MAP_COLOR);
 		ItemComponentUtils.copyComponent(oldItem, newItem, DataComponentTypes.MAP_DECORATIONS);
 	}
 }

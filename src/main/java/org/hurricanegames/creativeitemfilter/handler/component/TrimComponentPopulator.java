@@ -8,7 +8,6 @@ import org.hurricanegames.creativeitemfilter.utils.ItemComponentUtils;
 import org.jetbrains.annotations.NotNull;
 
 
-@SuppressWarnings("UnstableApiUsage")
 public class TrimComponentPopulator implements ItemComponentPopulator {
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,

@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Function;
 
 public class ItemComponentUtils {
-	@SuppressWarnings("UnstableApiUsage")
 	public static <T> void copyComponent(ItemStack oldItem, ItemStack newItem, DataComponentType.Valued<T> component) {
 		if(oldItem.isDataOverridden(component)) {
 			T data = oldItem.getData(component);
@@ -20,7 +19,6 @@ public class ItemComponentUtils {
 		}
 	}
 
-	@SuppressWarnings("UnstableApiUsage")
 	public static <T> void copyComponent(ItemStack oldItem, ItemStack newItem, DataComponentType.Valued<T> component,
 										 Function<@Nullable T, @Nullable T> transformer) {
 		if(oldItem.isDataOverridden(component)) {
@@ -34,7 +32,6 @@ public class ItemComponentUtils {
 		}
 	}
 
-	@SuppressWarnings("UnstableApiUsage")
 	public static void copyComponent(ItemStack oldItem, ItemStack newItem, DataComponentType.NonValued component) {
 		if(oldItem.isDataOverridden(component)) {
 			if(oldItem.hasData(component)) {

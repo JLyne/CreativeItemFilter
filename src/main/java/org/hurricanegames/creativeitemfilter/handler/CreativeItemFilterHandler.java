@@ -28,7 +28,6 @@ import org.hurricanegames.creativeitemfilter.handler.meta.MetaCopierFactory;
 import org.jetbrains.annotations.Nullable;
 import uk.co.notnull.messageshelper.Message;
 
-@SuppressWarnings("UnstableApiUsage")
 public class CreativeItemFilterHandler implements Listener {
 	private final Logger logger;
 	private final CreativeItemFilterConfiguration configuration;

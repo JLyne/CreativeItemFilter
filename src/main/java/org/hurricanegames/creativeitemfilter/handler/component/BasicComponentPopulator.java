@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@SuppressWarnings("UnstableApiUsage")
 public final class BasicComponentPopulator implements ItemComponentPopulator {
 	private static final List<DataComponentType.Valued<?>> basicComponents = List.of(
 			DataComponentTypes.REPAIR_COST,

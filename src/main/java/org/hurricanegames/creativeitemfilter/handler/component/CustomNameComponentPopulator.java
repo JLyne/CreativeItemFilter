@@ -9,7 +9,6 @@ import org.hurricanegames.creativeitemfilter.utils.ItemComponentUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class CustomNameComponentPopulator implements ItemComponentPopulator {
-	@SuppressWarnings("UnstableApiUsage")
 	@Override
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,
 								   CreativeItemFilterConfiguration configuration) {

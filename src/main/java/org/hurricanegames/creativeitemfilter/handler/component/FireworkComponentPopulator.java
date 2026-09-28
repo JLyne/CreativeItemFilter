@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
-@SuppressWarnings("UnstableApiUsage")
 public final class FireworkComponentPopulator implements ItemComponentPopulator {
 	@Override
 	public void populateComponents(
